@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <!-- font-family: 'Montserrat', sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>Adhero Patient Signup</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class=" navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo-large.png" style="height:100px; width:100px;" alt="brand-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Login/Signup
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/patientLogin">Patient Login</a></li>
+                                <li><a class="dropdown-item" href="/patientSignup">Patient Signup</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/doctorLogin">Doctor Login</a></li>
+                                <li><a class="dropdown-item" href="/doctorSignup">Doctor Signup</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registerPractice">Register Your Practice</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Title -->
+    <header class="page-header mx-auto col-md-7 my-4">
+        <h1 class="page-title">Patient Signup</h1>
+    </header>
+
+    <div class="d-flex mx-auto col-md-7">
+
+        <!--Form Starting-->
+
+        <form class="row g-3 needs-validation" action="/auth/patientLogin" method="POST" oninput="mySignupValidator()"
+            novalidate>
+
+            <div class="col-md-6">
+                <label for="fname" class="form-label">First name</label>
+                <input type="text" class="form-control" id="fname" name="fname" placeholder="John" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="lname" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="lname" name="lname" placeholder="Doe" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-select" id="gender" name="is_male" required>
+                    <option selected disabled></option>
+                    <option value="1">Male</option>
+                    <option value="0">Female</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select your Gender.
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label for="marital-status" class="form-label">Marital Status</label>
+                <select class="form-select" id="marital-status" name="is_married">
+                    <option selected value=""></option>
+                    <option value="0">Single</option>
+                    <option value="1">Married</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select your Marital Status.
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label for="race" class="form-label">Race</label>
+                <select class="form-select" id="race" name="race" required>
+                    <option selected disabled></option>
+                    <option value="asian">Asian</option>
+                    <option value="black">Black</option>
+                    <option value="white">White</option>
+                    <option value="native">Native</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select your Race.
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label for="ethnicity" class="form-label">Ethnicity</label>
+                <select class="form-select" id="ethnicity" name="ethnicity" required>
+                    <option selected disabled></option>
+                    <option value="hispanic">Hispanic</option>
+                    <option value="non-hispanic">Non Hispanic</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select your Ethnicity.
+                </div>
+            </div>
+
+            <div class="col-md-10">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="john@gmail.com" pattern="^[\w.+\-]+@gmail\.com$" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <label for="age" class="form-label">Age</label>
+                <input type="number" min="0" max="120" class="form-control" id="age" name="age" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Enter valid Age !
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" minlength="8" maxlength="16" class="form-control" id="password" name="password"
+                    required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Password length should be 8-16 characters!
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                <div class="invalid-feedback">
+                    Passwords do not match !
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="contact-no" class="form-label">Contact Number</label>
+                <input type="tel" class="form-control" id="contact-no" name="contact" pattern="[0-9]{10}" required>
+                <!-- <input id="contact-no" type="tel" pattern="^\d{4}-\d{3}-\d{4}$" required > -->
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    10 Digits please !
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="alt-contact-no" class="form-label">Alternative Contact Number</label>
+                <input type="tel" class="form-control" id="alt-contact-no" name="altContact" pattern="[0-9]{10}"
+                    placeholder="Optional">
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    10 Digits please !
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" name="city" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <label for="county" class="form-label">County</label>
+                <select class="form-select" id="county" name="county" required>
+                    <option selected disabled value=""></option>
+                    <option value="Barnstable">Barnstable</option>
+                    <option value="Berkshire">Berkshire</option>
+                    <option value="Bristol">Bristol</option>
+                    <option value="Dukes">Dukes</option>
+                    <option value="Essex">Essex</option>
+                    <option value="Franklin">Franklin</option>
+                    <option value="Hampden">Hampden</option>
+                    <option value="Hampshire">Hampshire</option>
+                    <option value="Middlesex">Middlesex</option>
+                    <option value="Nantucket">Nantucket</option>
+                    <option value="Norfolk">Norfolk</option>
+                    <option value="Plymouth">Plymouth</option>
+                    <option value="Suffolk">Suffolk</option>
+                    <option value="Worcester">Worcester</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid County.
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                    <label class="form-check-label" for="invalidCheck">
+                        Agree to terms and conditions
+                    </label>
+                    <div class="invalid-feedback">
+                        You must agree before submitting.
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-3">
+                <button class="btn btn-orange btn-outline" type="submit">Submit form</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="../javascript/signup.js"></script>
+    <!-- Bootstrap 5 : JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

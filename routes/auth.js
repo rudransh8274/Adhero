@@ -11,14 +11,11 @@ const router=express.Router();
 //which has been exported upwards, i.e. on another directory=contorllers/auth
 router.post('/patientLogin', authController.patientSignup);
 router.post('/registerPractice', authController.registerPractice);  
-router.post('/afterLogin', authController.afterLogin);
+
 router.post('/doctorSignup', authController.doctorSignup);
-router.post('/searchDoctors', authController.searchDoctors);
-router.post('/bookDoctor',authController.bookDoctor);
-router.post('/bookingEntry',authController.bookingEntry);
-router.post('/viewBookingsPat',authController.viewBookingsPat);
-router.post('/cancelBookingsPat',authController.cancelBookingsPat);
-router.post('/viewBookingsDoc',authController.viewBookingsDoc);
+// router.post('/searchDoctors', authController.searchDoctors);
+// router.post('/bookDoctor',authController.bookDoctor);
+
 
 
 
