@@ -430,18 +430,8 @@ exports.doctorSignup = (req, res) => {
                 let hashedPassword = await bcrypt.hash(password, 8);
                 console.log(hashedPassword);
 
-
-                db.query('INSERT INTO doctor SET ?', { email: email, password: hashedPassword }, (error, results) => {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log(results);
-
-                    }
-                });
-
                 //entering into table -> doctor
-                db.query('INSERT INTO doctor SET ?', { first_name: fname, last_name: lname,clinic_id: clinicId, contact_no:contactNo , degree: degree,charges: consultingCharges, specialization: specialization }, (error, results) => {
+                db.query('INSERT INTO doctor SET ?', { first_name: fname, email: email, password: hashedPassword ,last_name: lname,clinic_id: clinicId, contact_no:contactNo , degree: degree,charges: consultingCharges, specialization: specialization }, (error, results) => {
                     if (error) {
                         console.log(error);
                     } else {
