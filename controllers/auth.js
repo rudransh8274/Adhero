@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 var bodyParser = require('body-parser');
 const session=require('express-session');
+const async = require('hbs/lib/async');
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -16,11 +17,11 @@ const db = mysql.createConnection({
 var patientSess;
 
 //for Patient login
-exports.afterLogin = async (req, res) => {
+exports.afterPatLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        db.query('Select * FROM patient_login WHERE email= ?', [email], async (error, results) => {
+        db.query('Select * FROM patient WHERE email= ?', [email], async (error, results) => {
             if(error){
                 console.log(error);
             }
@@ -54,10 +55,6 @@ exports.afterLogin = async (req, res) => {
                 
                     }
                 });
-                // console.log(sess.city);
-                
-                //session
-
 
                 const id = results[0].id;
                 const token = jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -72,7 +69,7 @@ exports.afterLogin = async (req, res) => {
                     httpOnly: true
                 }
                 res.cookie('jwt', token, cookieOptions);
-                res.status(200).redirect("/searchDoctors");
+                res.status(200).redirect("/afterPatLogin");
             }
         })
 
@@ -237,9 +234,9 @@ exports.cancelBookingsPat = (req,res) => {
 exports.patientSignup = (req, res) => {
     console.log(req.body);
 
-    const { fname, lname, email, age, password, contact, altContact, house, street, city } = req.body;
+    const { fname, lname, gender, marital_status,race,ethnicity,email, age, password, contact, altContact, address, city,country } = req.body;
 
-    db.query('SELECT email from patient_login where email = ?', [email], async (error, results) => {
+    db.query('SELECT email from patient where email = ?', [email], async (error, results) => {
         if (error) {
             console.log(error);
         }
@@ -257,45 +254,45 @@ exports.patientSignup = (req, res) => {
         console.log(hashedPassword);
 
 
-        db.query('INSERT INTO patient_login SET ?', { email: email, password: hashedPassword }, (error, results) => {
+        // db.query('INSERT INTO patient SET ?', { email: email, password: hashedPassword }, (error, results) => {
+        //     if (error) {
+        //         console.log(error);
+        //     } else {
+        //         console.log(results);
+
+        //     }
+        // });
+
+
+        db.query('INSERT INTO patient SET ?', { first_name: fname, last_name: lname, email: email,password: hashedPassword, gender:gender, marital_status:marital_status, race:race,contact_no:contact, alt_contact:altContact, ethnicity: ethnicity, age: age, address: address, city: city,country:country }, (error, results) => {
             if (error) {
                 console.log(error);
             } else {
-                console.log(results);
 
-            }
-        });
+        // db.query('select max(patient_id) lastPatient from patient',(err,resu)=>{
 
-
-        db.query('INSERT INTO patient SET ?', { first_name: fname, last_name: lname, email: email, age: age, house_number: house, street: street, city: city }, (error, results) => {
-            if (error) {
-                console.log(error);
-            } else {
-
-        db.query('select max(patient_id) lastPatient from patient',(err,resu)=>{
-
-                db.query('INSERT INTO patient_contact SET ?',{patient_id:resu[0].lastPatient,contact_number:contact},(error,results)=>{
-                    if(error)
-                    {
-                        console.log(error);
-                    }else{
-                            console.log(results);
+        //         db.query('INSERT INTO patient_contact SET ?',{patient_id:resu[0].lastPatient,contact_number:contact},(error,results)=>{
+        //             if(error)
+        //             {
+        //                 console.log(error);
+        //             }else{
+        //                     console.log(results);
         
-                    }
-                });
+        //             }
+        //         });
 
-                //For alternate contact number
-                db.query('INSERT INTO patient_contact SET ?',{patient_id:resu[0].lastPatient,contact_number:altContact},(error,results)=>{
-                    if(error)
-                    {
-                        console.log(error);
-                    }else{
-                            console.log(results);
+        //         For alternate contact number
+        //         db.query('INSERT INTO patient_contact SET ?',{patient_id:resu[0].lastPatient,contact_number:altContact},(error,results)=>{
+        //             if(error)
+        //             {
+        //                 console.log(error);
+        //             }else{
+        //                     console.log(results);
         
-                    }
-                });
+        //             }
+        //         });
 
-            });
+        //     });
 
                 return res.render('patientLogin', {
                     message: 'User Registered!',
@@ -413,38 +410,28 @@ exports.searchDoctors = (req, res) => {
 exports.doctorSignup = (req, res) => {
     console.log(req.body);
 
-    const { clinicId, fname, lname, email, consultingCharges, password, contactNo, altContactNo, degree, specialization } = req.body;
+    const { clinicId, fname, lname, email, consultingCharges, password, contactNo, degree, specialization } = req.body;
 
-    db.query('SELECT email from doctor_login where email = ?', [email], (error, results) => {
+    db.query('SELECT email from doctor where email = ?', [email], async (error, results) => {
         if (error) {
             console.log(error);
         }
 
 
-        if (results.length > 0) {
+        else if (results.length > 0) {
             return res.render('doctorSignup', {
                 message: 'The email is already in use',
                 messageClass:'alert-warning'
             });
         }
 
-
-
-
-        //for clinic id search
-
-        db.query('SELECT * from clinic WHERE clinic_id =?', [clinicId], async (err, results) => {
-            if (err) {
-                console.log(err);
-
-            } else if (results.length > 0) {
-                //entering into table=doctor_login
-
+      
+        else{
                 let hashedPassword = await bcrypt.hash(password, 8);
                 console.log(hashedPassword);
 
 
-                db.query('INSERT INTO doctor_login SET ?', { email: email, password: hashedPassword }, (error, results) => {
+                db.query('INSERT INTO doctor SET ?', { email: email, password: hashedPassword }, (error, results) => {
                     if (error) {
                         console.log(error);
                     } else {
@@ -453,55 +440,28 @@ exports.doctorSignup = (req, res) => {
                     }
                 });
 
-                //entering into table=doctor
-                db.query('INSERT INTO doctor SET ?', { first_name: fname, last_name: lname, email: email, clinic_id: clinicId, degree: degree, consulting_charges: consultingCharges, specialization: specialization }, (error, results) => {
+                //entering into table -> doctor
+                db.query('INSERT INTO doctor SET ?', { first_name: fname, last_name: lname,clinic_id: clinicId, contact_no:contactNo , degree: degree,charges: consultingCharges, specialization: specialization }, (error, results) => {
                     if (error) {
                         console.log(error);
                     } else {
-                        
-                        db.query('select max(doctor_id) lastDoctor from doctor',(err,resu)=>{
-
-                            db.query('INSERT INTO doctor_contact SET ?',{doctor_id:resu[0].lastDoctor,contact_no:contactNo},(error,results)=>{
-                                if(error)
-                                {
-                                    console.log(error);
-                                }else{
-                                        console.log(results);
-                    
-                                }
-                            });
-            
-                            //For alternate contact number
-                            db.query('INSERT INTO doctor_contact SET ?',{doctor_id:resu[0].lastDoctor,contact_no:altContactNo},(error,results)=>{
-                                if(error)
-                                {
-                                    console.log(error);
-                                }else{
-                                        console.log(results);
-                    
-                                }
-                            });
-            
-                        });
-            
-
-                        return res.render('doctorSignup', {
-                            message: 'Data Saved, you will get registered once authenticated!',
+                
+                        return res.render('doctorLogin', {
+                            message: 'You can now LogIn into the system',
                             messageClass:'alert-primary'
                         });
                     }
 
                 });
 
+            // else {
+            //     return res.render('doctorSignup', {
+            //         message: 'Your clinic is not registered, kindly register your clinic first!',
+            //         messageClass:'alert-warning'
+            //     });
+            // }
+       
             }
-            else {
-                return res.render('doctorSignup', {
-                    message: 'Your clinic is not registered, kindly register your clinic first!',
-                    messageClass:'alert-warning'
-                });
-            }
-        });
-
         //End-for clinic id search       
 
     });

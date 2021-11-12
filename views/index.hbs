@@ -66,14 +66,14 @@
     </header>
     <section>
         <h3 class="mt-5">24x7 Medical Assistance at Your Finger Tips</h3>
-        <h1 id="utilities" class="mt-3"></h1>
+        <h1 id="utilities" class="mt-3">Book Appointments</h1>
         <a class="btn btn-orange mt-5" href="#">Register Now!</a>
     </section>
 
     <!-- Bootstrap 5 : JS -->
     <script>
         const util = document.getElementById("utilities");
-        const utilities = ["Book Appointments","View Reports","Get Digital Prescriptions","One Click Refill", "Medical Alerts"];
+        const utilities = ["View Reports","Get Digital Prescriptions","One Click Refill", "Medical Alerts","Book Appointments"];
         var i = 0;
         setInterval(()=>{
             util.innerText = utilities[i%utilities.length];

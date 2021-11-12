@@ -11,8 +11,8 @@ const router=express.Router();
 //which has been exported upwards, i.e. on another directory=contorllers/auth
 router.post('/patientLogin', authController.patientSignup);
 router.post('/registerPractice', authController.registerPractice);  
-
-router.post('/doctorSignup', authController.doctorSignup);
+router.post('/afterPatLogin', authController.afterPatLogin);
+router.post('/doctorLogin', authController.doctorSignup);
 // router.post('/searchDoctors', authController.searchDoctors);
 // router.post('/bookDoctor',authController.bookDoctor);
 

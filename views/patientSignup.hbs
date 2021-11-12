@@ -90,10 +90,10 @@
 
             <div class="col-md-3">
                 <label for="gender" class="form-label">Gender</label>
-                <select class="form-select" id="gender" name="is_male" required>
+                <select class="form-select" id="gender" name="gender" required>
                     <option selected disabled></option>
-                    <option value="1">Male</option>
-                    <option value="0">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                 </select>
                 <div class="invalid-feedback">
                     Please select your Gender.
@@ -102,10 +102,10 @@
 
             <div class="col-md-3">
                 <label for="marital-status" class="form-label">Marital Status</label>
-                <select class="form-select" id="marital-status" name="is_married">
+                <select class="form-select" id="marital-status" name="marital_status">
                     <option selected value=""></option>
-                    <option value="0">Single</option>
-                    <option value="1">Married</option>
+                    <option value="single">Single</option>
+                    <option value="married">Married</option>
                 </select>
                 <div class="invalid-feedback">
                     Please select your Marital Status.
@@ -219,8 +219,8 @@
             </div>
 
             <div class="col-md-3">
-                <label for="county" class="form-label">County</label>
-                <select class="form-select" id="county" name="county" required>
+                <label for="country" class="form-label">Country</label>
+                <select class="form-select" id="country" name="country" required>
                     <option selected disabled value=""></option>
                     <option value="Barnstable">Barnstable</option>
                     <option value="Berkshire">Berkshire</option>
@@ -260,7 +260,7 @@
     </div>
 
     <!-- Custom JS -->
-    <script src="../javascript/signup.js"></script>
+    <script src="../javascript/patientSignup.js"></script>
     <!-- Bootstrap 5 : JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

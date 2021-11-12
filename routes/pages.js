@@ -27,9 +27,20 @@ router.get('/patientSignup',urlencodedParser,(req,res)=>{
 router.get('/addPrescription',urlencodedParser,(req,res)=>{
     res.render("addPrescription");
 });
-
-// router.get('/auth/searchDoctors',urlencodedParser,(req,res)=>{
-//     res.render("searchDoctors");
+// router.get('/afterPatLogin',urlencodedParser,(req,res)=>{
+//     res.render("afterPatLogin");
 // });
+
+//After Authentication
+router.get('/auth/patientLogin',urlencodedParser,(req,res)=>{
+    res.render("patientLogin");
+});
+router.get('/auth/doctorLogin',urlencodedParser,(req,res)=>{
+    res.render("doctorLogin");
+});
+router.get('/auth/afterPatLogin',urlencodedParser,(req,res)=>{
+    res.render("afterPatLogin");
+});
+
 
 module.exports=router;
