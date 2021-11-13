@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <!-- font-family: 'Montserrat', sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>Adhero Complete Profile</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class=" navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo-large.png" style="height:100px; width:100px;" alt="brand-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Login/Signup
+                        </a>
+                       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/patientLogin">Patient Login</a></li>
+                                <li><a class="dropdown-item" href="/patientSignup">Patient Signup</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/doctorLogin">Doctor Login</a></li>
+                                <li><a class="dropdown-item" href="/doctorSignup">Doctor Signup</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registerPractice">Register Your Practice</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Title -->
+    <header class="page-header mx-auto d-flex justify-content-center my-4">
+        <h1 class="page-title">Complete Your Profile (2/2)</h1>
+    </header>
+
+    <div class="d-flex mx-auto col-md-10">
+
+        <!-- Left Section -->
+        <div class="d-flex mx-auto col-md-6">
+
+            <!--form start-->
+            <form class="row g-3 needs-validation" action="" method="POST" novalidate>
+
+                <!-- LEFT : SECTION 1 -->
+                <h3 style="color: #FF9500;"> Add Allergy History </h3>
+
+                <div class="col-md-12">
+                    <label for="allergy-type" class="form-label">Allergy Type</label>
+                    <select class="form-select" id="allergy-type" name="allergy-type" required>
+                        <option selected value="">None</option>
+                        <option>Allergy to Bee Venom</option>
+                        <option>Allergy to Dairy Products</option>
+                        <option>Allergy to Eggs</option>
+                        <option>Allergy to Fish</option>
+                        <option>Allergy to Grass Pollen</option>
+                        <option>Allergy to Mould</option>
+                        <option>Allergy to Nuts</option>
+                        <option>Allergy to Peanuts</option>
+                        <option>Allergy to Soya</option>
+                        <option>Allergy to Tree Pollen</option>
+                        <option>Allergy to Wheat</option>
+                        <option>Dander (Animal) Allergy</option>
+                        <option>House Dust Mite Allergy</option>
+                        <option>Latex Allergy</option>
+                        <option>Shellfish Allergy</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid allergy.
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <label for="allergy-start-date" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="allergy-start-date" name="allergy-start-date" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Choose valid start date!
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <label for="allergy-end-date" class="form-label">End Date (Optional)</label>
+                    <input type="date" class="form-control" id="allergy-end-date" name="allergy-end-date">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Choose valid end date!
+                    </div>
+                </div>
+
+                <div class="col-md-2 mt-5">
+                    <button class="btn btn-orange" type="reset" onclick="addAllergy()"> Add </button>
+                </div>
+
+                <!-- Left : SECTION 2 -->
+                <h3 class="mt-5" style="color: #FF9500;"> Add Medical Condition History</h3>
+
+                <div class="col-md-12">
+                    <label for="condition-type" class="form-label">Condition Type</label>
+                    <input list="conditions" class="form-control" id="condition-type" name="condition-type">
+                    <datalist id="conditions">
+                        <option selected value="">None</option>
+                        <option value="Chronic sinusitis (disorder)">Chronic sinusitis (disorder)</option>
+                        <option value="Viral sinusitis (disorder)">Viral sinusitis (disorder)</option>
+                        <option value="Acute viral pharyngitis (disorder)">Acute viral pharyngitis (disorder)</option>
+                        <option value="Acute bronchitis (disorder)">Acute bronchitis (disorder)</option>
+                        <option value="Streptococcal sore throat (disorder)">Streptococcal sore throat (disorder)
+                        </option>
+                        <option value="Laceration of foot">Laceration of foot</option>
+                        <option value="Acute bacterial sinusitis (disorder)">Acute bacterial sinusitis (disorder)
+                        </option>
+                        <option value="Sprain of wrist">Sprain of wrist</option>
+                        <option value="Otitis media">Otitis media</option>
+                        <option value="Body mass index 30+ - obesity (finding)">Body mass index 30+ - obesity (finding)
+                        </option>
+                        <option value="Cystitis">Cystitis</option>
+                        <option value="Fracture of forearm">Fracture of forearm</option>
+                        <option value="Impacted molars">Impacted molars</option>
+                        <option value="Normal pregnancy">Normal pregnancy</option>
+                        <option value="Sinusitis (disorder)">Sinusitis (disorder)</option>
+                        <option value="Anemia (disorder)">Anemia (disorder)</option>
+                        <option value="Miscarriage in first trimester">Miscarriage in first trimester</option>
+                        <option value="Fetus with unknown complication">Fetus with unknown complication</option>
+                        <option value="Prediabetes">Prediabetes</option>
+                        <option value="Hypertension">Hypertension</option>
+                        <option value="Escherichia coli urinary tract infection">Escherichia coli urinary tract
+                            infection</option>
+                        <option value="Whiplash injury to neck">Whiplash injury to neck</option>
+                        <option value="Atrial Fibrillation">Atrial Fibrillation</option>
+                        <option value="Sprain of ankle">Sprain of ankle</option>
+                        <option value="Laceration of forearm">Laceration of forearm</option>
+                        <option value="Malignant neoplasm of breast (disorder)">Malignant neoplasm of breast (disorder)
+                        </option>
+                        <option value="Laceration of thigh">Laceration of thigh</option>
+                        <option value="Osteoarthritis of knee">Osteoarthritis of knee</option>
+                        <option value="Preeclampsia">Preeclampsia</option>
+                        <option value="Perennial allergic rhinitis with seasonal variation">Perennial allergic rhinitis
+                            with seasonal variation</option>
+                        <option value="Fracture of clavicle">Fracture of clavicle</option>
+                        <option value="Childhood asthma">Childhood asthma</option>
+                        <option value="Facial laceration">Facial laceration</option>
+                        <option value="Acute allergic reaction">Acute allergic reaction</option>
+                        <option value="Concussion with no loss of consciousness">Concussion with no loss of
+                            consciousness</option>
+                        <option value="Recurrent urinary tract infection">Recurrent urinary tract infection</option>
+                        <option value="Hyperlipidemia">Hyperlipidemia</option>
+                        <option value="Osteoarthritis of hip">Osteoarthritis of hip</option>
+                        <option value="Coronary Heart Disease">Coronary Heart Disease</option>
+                        <option value="Polyp of colon">Polyp of colon</option>
+                        <option value="Tubal pregnancy">Tubal pregnancy</option>
+                        <option value="Blighted ovum">Blighted ovum</option>
+                        <option value="Stroke">Stroke</option>
+                        <option value="Fracture of the vertebral column with spinal cord injury">Fracture of the
+                            vertebral column with spinal cord injury</option>
+                        <option value="Atopic dermatitis">Atopic dermatitis</option>
+                        <option value="Seasonal allergic rhinitis">Seasonal allergic rhinitis</option>
+                        <option value="Cardiac Arrest">Cardiac Arrest</option>
+                        <option value="History of cardiac arrest (situation)">History of cardiac arrest (situation)
+                        </option>
+                        <option value="Fracture of ankle">Fracture of ankle</option>
+                        <option value="Second degree burn">Second degree burn</option>
+                        <option value="Fracture subluxation of wrist">Fracture subluxation of wrist</option>
+                        <option value="Diabetes">Diabetes</option>
+                        <option value="Hypertriglyceridemia (disorder)">Hypertriglyceridemia (disorder)</option>
+                        <option value="Metabolic syndrome X (disorder)">Metabolic syndrome X (disorder)</option>
+                        <option value="Fracture of rib">Fracture of rib</option>
+                        <option value="Antepartum eclampsia">Antepartum eclampsia</option>
+                        <option value="Chronic pain">Chronic pain</option>
+                        <option value="Chronic intractable migraine without aura">Chronic intractable migraine without
+                            aura </option>
+                        <option value="Drug overdose">Drug overdose</option>
+                        <option value="Osteoporosis (disorder)">Osteoporosis (disorder)</option>
+                        <option value="Idiopathic atrophic hypothyroidism">Idiopathic atrophic hypothyroidism</option>
+                        <option value="Seizure disorder">Seizure disorder</option>
+                        <option value="History of single seizure (situation)">History of single seizure (situation)
+                        </option>
+                        <option value="Perennial allergic rhinitis">Perennial allergic rhinitis</option>
+                        <option value="Epilepsy">Epilepsy</option>
+                        <option value="Myocardial Infarction">Myocardial Infarction</option>
+                        <option value="History of myocardial infarction (situation)">History of myocardial infarction
+                            (situation)</option>
+                        <option value="Body mass index 40+ - severely obese (finding)">Body mass index 40+ - severely
+                            obese (finding)</option>
+                        <option value="Hyperglycemia (disorder)">Hyperglycemia (disorder)</option>
+                        <option value="Neuropathy due to type 2 diabetes mellitus (disorder)">Neuropathy due to type 2
+                            diabetes mellitus (disorder)</option>
+                        <option value="Diabetic retinopathy associated with type II diabetes mellitus (disorder)">
+                            Diabetic retinopathy associated with type II diabetes mellitus (disorder)</option>
+                        <option
+                            value="Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus (disorder)">
+                            Nonproliferative diabetic retinopathy due to type 2 diabetes mellitus (disorder)</option>
+                        <option value="Chronic kidney disease stage 1 (disorder)">Chronic kidney disease stage 1
+                            (disorder)
+                        </option>
+                        <option value="Diabetic renal disease (disorder)">Diabetic renal disease (disorder)</option>
+                        <option value="Localized  primary osteoarthritis of the hand">Localized primary osteoarthritis
+                            of the hand</option>
+                        <option value="Neoplasm of prostate">Neoplasm of prostate</option>
+                        <option value="Carcinoma in situ of prostate (disorder)">Carcinoma in situ of prostate
+                            (disorder)
+                        </option>
+                        <option value="Laceration of hand">Laceration of hand</option>
+                        <option value="Injury of tendon of the rotator cuff of shoulder">Injury of tendon of the rotator
+                            cuff of shoulder</option>
+                        <option value="Pulmonary emphysema (disorder)">Pulmonary emphysema (disorder)</option>
+                        <option value="Appendicitis">Appendicitis</option>
+                        <option value="History of appendectomy">History of appendectomy</option>
+                        <option value="Major depression disorder">Major depression disorder</option>
+                        <option value="Alcoholism">Alcoholism</option>
+                        <option value="Burn injury(morphologic abnormality)">Burn injury(morphologic abnormality)
+                        </option>
+                        <option value="Rupture of patellar tendon">Rupture of patellar tendon</option>
+                        <option value="Concussion with loss of consciousness">Concussion with loss of consciousness
+                        </option>
+                        <option value="Child attention deficit disorder">Child attention deficit disorder</option>
+                        <option value="Injury of medial collateral ligament of knee">Injury of medial collateral
+                            ligament of knee</option>
+                        <option value="Recurrent rectal polyp">Recurrent rectal polyp</option>
+                        <option value="Contact dermatitis">Contact dermatitis</option>
+                        <option value="Familial Alzheimer's disease of early onset (disorder)">Familial Alzheimer's
+                            disease of early onset (disorder)</option>
+                        <option value="Chronic kidney disease stage 2 (disorder)">Chronic kidney disease stage 2
+                            (disorder)
+                        </option>
+                        <option value="Microalbuminuria due to type 2 diabetes mellitus (disorder)">Microalbuminuria due
+                            to type 2 diabetes mellitus (disorder)</option>
+                        <option value="Bleeding from anus">Bleeding from anus</option>
+                        <option value="Protracted diarrhea">Protracted diarrhea</option>
+                        <option value="Malignant tumor of colon">Malignant tumor of colon</option>
+                        <option value="First degree burn">First degree burn</option>
+                        <option value="Suspected lung cancer (situation)">Suspected lung cancer (situation)</option>
+                        <option value="Non-small cell lung cancer (disorder)">Non-small cell lung cancer (disorder)
+                        </option>
+                        <option value="Non-small cell carcinoma of lung  TNM stage 1 (disorder)">Non-small cell
+                            carcinoma of lung TNM stage 1 (disorder)</option>
+                        <option value="Chronic congestive heart failure (disorder)">Chronic congestive heart failure
+                            (disorder)</option>
+                        <option value="Chronic obstructive bronchitis (disorder)">Chronic obstructive bronchitis
+                            (disorder)
+                        </option>
+                        <option value="Tear of meniscus of knee">Tear of meniscus of knee</option>
+                        <option value="Fracture of vertebral column without spinal cord injury">Fracture of vertebral
+                            column without spinal cord injury</option>
+                        <option value="Smokes tobacco daily">Smokes tobacco daily</option>
+                        <option value="Gout">Gout</option>
+                        <option value="Rupture of appendix">Rupture of appendix</option>
+                        <option value="Alzheimer's disease (disorder)">Alzheimer's disease (disorder)</option>
+                        <option value="Pneumonia">Pneumonia</option>
+                        <option value="Opioid abuse (disorder)">Opioid abuse (disorder)</option>
+                        <option value="Concussion injury of brain">Concussion injury of brain</option>
+                        <option value="Metastasis from malignant tumor of prostate (disorder)">Metastasis from malignant
+                            tumor of prostate (disorder)</option>
+                        <option value="Closed fracture of hip">Closed fracture of hip</option>
+                        <option value="Rheumatoid arthritis">Rheumatoid arthritis</option>
+                        <option value="Overlapping malignant neoplasm of colon">Overlapping malignant neoplasm of colon
+                        </option>
+                        <option value="Macular edema and retinopathy due to type 2 diabetes mellitus (disorder)">Macular
+                            edema and retinopathy due to type 2 diabetes mellitus (disorder)</option>
+                        <option value="Pathological fracture due to osteoporosis (disorder)">Pathological fracture due
+                            to osteoporosis (disorder)</option>
+                        <option value="Brain damage - traumatic">Brain damage - traumatic</option>
+                        <option value="Secondary malignant neoplasm of colon">Secondary malignant neoplasm of colon
+                        </option>
+                        <option value="Bullet wound">Bullet wound</option>
+                        <option value="Proliferative diabetic retinopathy due to type II diabetes mellitus (disorder)">
+                            Proliferative diabetic retinopathy due to type II diabetes mellitus (disorder)</option>
+                        <option value="Injury of anterior cruciate ligament">Injury of anterior cruciate ligament
+                        </option>
+                        <option value="Pyelonephritis">Pyelonephritis</option>
+                        <option value="Primary fibromyalgia syndrome">Primary fibromyalgia syndrome</option>
+                        <option value="Primary malignant neoplasm of colon">Primary malignant neoplasm of colon</option>
+                        <option value="Small cell carcinoma of lung (disorder)">Small cell carcinoma of lung (disorder)
+                        </option>
+                        <option value="Primary small cell malignant neoplasm of lung  TNM stage 1 (disorder)">Primary
+                            small cell malignant neoplasm of lung TNM stage 1 (disorder)</option>
+                        <option value="Major depression  single episod">Major depression single episod</option>
+
+                    </datalist>
+                    <div class="invalid-feedback">
+                        Please select a valid condition.
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <label for="condition-start-date" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="condition-start-date" name="condition-start-date" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Choose valid start date!
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <label for="condition-end-date" class="form-label">End Date (Optional)</label>
+                    <input type="date" class="form-control" id="condition-end-date" name="condition-end-date">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Choose valid end date!
+                    </div>
+                </div>
+
+                <div class="col-md-2 mt-5">
+                    <button class="btn btn-orange" type="reset" onclick="addCondition()">Add</button>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Right -->
+        <div class="d-flex flex-column mx-5 col-md-6">
+
+            <h3 style="color: #FF9500;"> Summary </h3>
+
+            <div class="col-12 mt-5">
+                <table class="table table-dark table-striped">
+                    <thead id="sum">
+                        <tr>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="summary">
+                        
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="d-flex flex-row-reverse col-md-12 mt-5">
+                <button class="btn btn-orange" type="submit">Submit</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Custom JS -->
+    <script>
+        const summary = document.getElementById("summary");
+        // Allergies
+        const allergyType = document.getElementById("allergy-type");
+        const allergyStartDate = document.getElementById("allergy-start-date");
+        const allergyEndDate = document.getElementById("allergy-end-date");
+        // Conditions
+        const conditionType = document.getElementById("condition-type");
+        const conditionStartDate = document.getElementById("condition-start-date");
+        const conditionEndDate = document.getElementById("condition-end-date");
+        
+        let data = [];
+        let packet = {
+            "desc":"",
+            "startDate":"",
+            "endDate":"",
+            "isAllergy":true
+        }
+
+        let addRowToSummaryTable = (packet) =>{
+            summary.innerHTML += `
+                <tr>
+                    <td>${packet.isAllergy ? 'Allergy' : 'Condition'}</td>
+                    <td>${packet.desc}</td>
+                    <td>${packet.startDate}</td>
+                    <td>${packet.endDate}</td>
+                </tr>
+            `;
+        }
+
+        let addAllergy = ()=>{
+            packet.desc = allergyType.value;
+            packet.startDate = allergyStartDate.value;
+            packet.endDate = allergyEndDate.value;
+
+            data.push(packet);
+            addRowToSummaryTable(packet);
+        }
+
+        let addCondition = ()=>{
+            packet.desc = conditionType.value;
+            packet.startDate = conditionStartDate.value;
+            packet.endDate = conditionEndDate.value;
+            packet.isAllergy = false;
+            
+            data.push(packet);
+            addRowToSummaryTable(packet);
+        }
+
+    </script>
+    <!-- Bootstrap 5 : JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

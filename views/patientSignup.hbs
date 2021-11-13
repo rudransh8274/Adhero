@@ -61,6 +61,9 @@
     </nav>
 
     <!-- Page Title -->
+        {{#if message}}
+            <h4 class='alert {{messageClass}} mt-4'>{{message}}</h4>
+        {{/if}}
     <header class="page-header mx-auto col-md-7 my-4">
         <h1 class="page-title">Patient Signup</h1>
     </header>

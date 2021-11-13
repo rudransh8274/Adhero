@@ -17,21 +17,22 @@ const db = mysql.createConnection({
 var patientSess;
 
 //for Patient login
-exports.afterPatLogin = async (req, res) => {
+exports.afterLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
 
         db.query('Select * FROM patient WHERE email= ?', [email], async (error, results) => {
+            const verified = bcrypt.compareSync(password,results[0].password);
             if(error){
                 console.log(error);
             }
-            console.log(results);
-            if (!results || !(await bcrypt.compare(password, results[0].password))) {
-                res.status(400).render('patientLogin', {
-                    message: 'Email or password is incorrect!',
-                    messageClass:'alert-warning'
-                });
-            }
+            //console.log(results);
+            // else if (!results || !verified) {
+            //     res.status(400).render('patientLogin', {
+            //         message: 'Email or password is incorrect!',
+            //         messageClass:'alert-warning'
+            //     });
+            // }
 
             else {
                 //creating session
@@ -69,7 +70,7 @@ exports.afterPatLogin = async (req, res) => {
                     httpOnly: true
                 }
                 res.cookie('jwt', token, cookieOptions);
-                res.status(200).redirect("/afterPatLogin");
+                res.status(200).redirect("/searchDoctor");
             }
         })
 
@@ -167,6 +168,25 @@ exports.viewBookingsDoc = async (req, res) => {
     }
 }
 
+
+exports.addAllergies =(req,res)=>{
+    const {fname, lname, email, contact, healthcare_coverage, healthcare_expense} = req.body;
+
+    //error could be due to wrong query syntax
+    db.query('INSERT INTO patient WHERE patient_id=? SET ?',[], { caregiver_fname: fname, caregiver_lname: lname, caregiver_email: email, caregiver_contact:contact,healthcare_coverage:healthcare_coverage,healthcare_expense:healthcare_expense }, (error, results) => {
+        if (error) {
+            console.log(error);
+        } else {
+
+            return res.render('completeProfile', {
+                message: 'User Registered!',
+                messageClass:'alert-primary'
+            });
+        }
+
+    });
+
+}
 
 
 exports.viewBookingsPat = (req,res) => {
@@ -294,7 +314,7 @@ exports.patientSignup = (req, res) => {
 
         //     });
 
-                return res.render('patientLogin', {
+                return res.render('completeProfile', {
                     message: 'User Registered!',
                     messageClass:'alert-primary'
                 });
@@ -315,7 +335,7 @@ exports.patientSignup = (req, res) => {
 //Needed doctor- doctor name,cnsultationcharges,full name,degree,specialization
 //Needed clinic-,clinic name and full address
 
-exports.searchDoctors = (req, res) => {
+exports.searchDoctor = (req, res) => {
 
     
 
@@ -330,14 +350,14 @@ exports.searchDoctors = (req, res) => {
 
 
         if (results.length === 0) {
-            return res.render('searchDoctors', {
+            return res.render('searchDoctor', {
                 message: 'Sorry, no doctors for selected specialization in your city!',
                 messageClass:'alert-warning'
             });
 
         }
 
-        db.query('SELECT doctor_id,first_name,last_name,consulting_charges,degree,specialization,clinic_name,plot_number,landmark,street,city FROM doctor JOIN clinic using (clinic_id) WHERE specialization=? and city=?',[specialization,patientSess.city],(err,data)=>{
+        db.query('SELECT doctor_id,first_name,last_name,charges,degree,specialization,clinic_name,address,city FROM doctor JOIN clinic using (clinic_id) WHERE specialization=? and city=?',[specialization,patientSess.city],(err,data)=>{
 
             if(err)
             {
@@ -345,7 +365,7 @@ exports.searchDoctors = (req, res) => {
             }
             else if(data.length===0)
             {
-                return res.render('searchDoctors', {
+                return res.render('searchDoctor', {
                 message: 'Sorry, no doctors for selected specialization in your city!',
                 messageClass:'alert-warning'   
             });
@@ -467,15 +487,15 @@ exports.bookDoctor=(req,res)=>{
 exports.registerPractice = (req, res) => {
     console.log(req.body);
 
-    const { name, email, contact, plot, landmark, street, city } = req.body;
+    const { name, email, contact, address, zip, city } = req.body;
 
-    db.query('SELECT email from clinic where email = ?', [email], async (error, results) => {
+    db.query('SELECT clinic_email from clinic where clinic_email = ?', [email], async (error, results) => {
         if (error) {
             console.log(error);
         }
 
         if (results.length > 0) {
-            return res.render('register', {
+            return res.render('registerPractice', {
                 message: 'The email is already in use',
                 messageClass:'alert-warning'
             });
@@ -485,7 +505,7 @@ exports.registerPractice = (req, res) => {
         // let hashedPassword = await bcrypt.hash(password,8);
         // console.log(hashedPassword);
 
-        db.query('INSERT INTO clinic SET ?', { clinic_name: name, email: email, contact_no: contact, plot_number: plot, landmark: landmark, street: street, city: city }, (error, results) => {
+        db.query('INSERT INTO clinic SET ?', { clinic_name: name, clinic_email: email, contact_no: contact, address:address, zip:zip, city:city }, (error, results) => {
             if (error) {
                 console.log(error);
             } else {

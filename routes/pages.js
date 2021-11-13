@@ -27,6 +27,21 @@ router.get('/patientSignup',urlencodedParser,(req,res)=>{
 router.get('/addPrescription',urlencodedParser,(req,res)=>{
     res.render("addPrescription");
 });
+router.get('/addAllergies',urlencodedParser,(req,res)=>{
+    res.render("addAllergies");
+});
+router.get('/completeProfile',urlencodedParser,(req,res)=>{
+    res.render("completeProfile");
+});
+router.get('/searchDoctor',urlencodedParser,(req,res)=>{
+    res.render("searchDoctor");
+});
+router.get('/afterSearch',urlencodedParser,(req,res)=>{
+    res.render("afterSearch");
+});
+router.get('/bookDoctor',urlencodedParser,(req,res)=>{
+    res.render("bookDoctor");
+});
 // router.get('/afterPatLogin',urlencodedParser,(req,res)=>{
 //     res.render("afterPatLogin");
 // });
@@ -40,6 +55,11 @@ router.get('/auth/doctorLogin',urlencodedParser,(req,res)=>{
 });
 router.get('/auth/afterPatLogin',urlencodedParser,(req,res)=>{
     res.render("afterPatLogin");
+});
+
+//can be of no use
+router.get('/auth/registerPractice',urlencodedParser,(req,res)=>{
+    res.render("registerPractice");
 });
 
 

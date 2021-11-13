@@ -15,7 +15,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-    <title>Adhero Patient Login</title>
+    <title>Adhero Complete Profile</title>
     <!-- CSS -->
     <link rel="stylesheet" href="/css/index.css">
 </head>
@@ -64,50 +64,92 @@
         {{#if message}}
             <h4 class='alert {{messageClass}} mt-4'>{{message}}</h4>
         {{/if}}
-    <header class="page-header mx-auto col-md-3 my-4">
-        <h1 class="page-title">Patient Login</h1>
+    <header class="page-header mx-auto d-flex justify-content-center my-4">
+        <h1 class="page-title">Complete Your Profile (1/2)</h1>
     </header>
 
-    <div class="d-flex mx-auto col-md-3">
+    <div class="d-flex mx-auto col-md-5">
 
-    <!--form start-->
-        <form class="row g-3 needs-validation" action="/auth/afterLogin" method="POST" novalidate>
+            <!--form start-->
+            <form class="row g-3 needs-validation" action="" method="POST" novalidate>
 
-            <div class="col-md-12">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" name="email" id="email" required>
-                <div class="valid-feedback">
-                    Looks good!
+                <!-- SECTION 1 -->
+                <h3 style="color: #FF9500;"> Add Caregiver Details</h3>
+
+                <div class="col-md-6">
+                    <label for="fname" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="fname" name="fname" placeholder="John" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
-                <div class="invalid-feedback">
-                    Invalid Email Address !
-                </div>
-            </div>
 
-            <div class="col-md-12">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-                <div class="valid-feedback">
-                    Looks good!
+                <div class="col-md-6">
+                    <label for="lname" class="form-label">Last name</label>
+                    <input type="text" class="form-control" id="lname" name="lname" placeholder="Doe" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
-                <div class="invalid-feedback">
-                    Password length should be 8-16 characters!
+
+                <div class="col-md-6">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="john@gmail.com" pattern="^[\w.+\-]+@gmail\.com$" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Invalid Email Address !
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-6 mt-5">
-                <button class="btn btn-orange" type="submit">Login</button>
-            </div>
+                <div class="col-md-6">
+                    <label for="contact-no" class="form-label">Contact Number</label>
+                    <input type="tel" class="form-control" id="contact-no" name="contact" pattern="[0-9]{10}" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        10 Digits please !
+                    </div>
+                </div>
 
-            <div class="col-6 mt-5">
-                <button class="btn btn-outline-warning" type="submit">Forgot Password</button>
-            </div>
-        </form>
+                <!-- SECTION 2 -->
+                <h3 class="mt-5" style="color: #FF9500;"> Add Healthcare Details</h3>
+
+                <div class="col-md-12">
+                    <label for="healthcare_coverage" class="form-label">Healthcare Coverage</label>
+                    <input type="number" min="0" max="250000" class="form-control" id="healthcare_coverage" name="healthcare_coverage"
+                        required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Invalid input!
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="healthcare_expense" class="form-label">Current Healthcare Expense</label>
+                    <input type="number" min="0" class="form-control" id="healthcare_expense" name="healthcare_expense"
+                        required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Invalid input!
+                    </div>
+                </div>
+
+                <div class="col-6 mt-5">
+                    <a class="btn btn-orange" href="/auth/addAllergies">Next</a>
+                </div>
+
+            </form>
             
     </div>
 
     <!-- Custom JS -->
-    <script src="../javascript/login.js"></script>
     <!-- Bootstrap 5 : JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
