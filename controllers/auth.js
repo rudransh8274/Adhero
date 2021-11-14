@@ -70,7 +70,7 @@ exports.afterLogin = async (req, res) => {
                     httpOnly: true
                 }
                 res.cookie('jwt', token, cookieOptions);
-                res.status(200).redirect("/searchDoctor");
+                res.status(200).redirect("/patientHome");
             }
         })
 
@@ -527,10 +527,10 @@ exports.registerPractice = (req, res) => {
 exports.bookingEntry = (req, res) => {
     console.log(req.body);
 
-    const { docId, dateBooked,timeBooked,appointment_type} = req.body;
+    const { docId, dateBooked,timeBooked,appointment_type,desc} = req.body;
     const dTime=dateBooked + ' ' + timeBooked + ':00';
 
-    db.query('SELECT appointment_Dtime,doctor_id from booking where appointment_Dtime= ? and doctor_id = ?', [dTime,docId], async (error, results) => {
+    db.query('SELECT appointment_Dtime,doctor_id from appointment where appointment_Dtime= ? and doctor_id = ?', [dTime,docId], async (error, results) => {
         if (error) {
             console.log(error);
         }
@@ -544,14 +544,14 @@ exports.bookingEntry = (req, res) => {
 
         
         console.log(patientSess);
-        db.query('INSERT INTO booking SET ?', { appointment_Dtime: dTime, patient_id:patientSess.ids, doctor_id: docId,appointment_type:appointment_type}, (error, results) => {
+        db.query('INSERT INTO appointment SET ?', { appointment_Dtime: dTime, patient_id:patientSess.ids, doctor_id: docId,appointment_type:appointment_type,description:desc}, (error, results) => {
             if (error) {
                 console.log(error);
             } else {
                 console.log(results);
 
                 return res.render('bookDoctor', {
-                    message: 'Appointment Fixed!',
+                    message: 'Appointment Fixed, want to book another?',
                     messageClass:'alert-primary'
                 });
             }

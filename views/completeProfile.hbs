@@ -42,28 +42,25 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Login/Signup
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="/patientLogin">Patient Login</a></li>
-                                <li><a class="dropdown-item" href="/patientSignup">Patient Signup</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="/doctorLogin">Doctor Login</a></li>
-                                <li><a class="dropdown-item" href="/doctorSignup">Doctor Signup</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/registerPractice">Register Your Practice</a>
-                        </li>
+                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="patientLogin">Patient Login</a></li>
+                            <li><a class="dropdown-item" href="patientSignup">Patient Signup</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="doctorLogin">Doctor Login</a></li>
+                            <li><a class="dropdown-item" href="doctorSignup">Doctor Signup</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="registerPractice">Register Your Practice</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Page Title -->
-        {{#if message}}
-            <h4 class='alert {{messageClass}} mt-4'>{{message}}</h4>
-        {{/if}}
     <header class="page-header mx-auto d-flex justify-content-center my-4">
         <h1 class="page-title">Complete Your Profile (1/2)</h1>
     </header>
@@ -104,8 +101,8 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="contact-no" class="form-label">Contact Number</label>
-                    <input type="tel" class="form-control" id="contact-no" name="contact" pattern="[0-9]{10}" required>
+                    <label for="contact" class="form-label">Contact Number</label>
+                    <input type="tel" class="form-control" id="contact" name="contact" pattern="[0-9]{10}" required>
                     <div class="valid-feedback">
                         Looks good!
                     </div>
@@ -118,8 +115,8 @@
                 <h3 class="mt-5" style="color: #FF9500;"> Add Healthcare Details</h3>
 
                 <div class="col-md-12">
-                    <label for="healthcare_coverage" class="form-label">Healthcare Coverage</label>
-                    <input type="number" min="0" max="250000" class="form-control" id="healthcare_coverage" name="healthcare_coverage"
+                    <label for="healthcareCoverage" class="form-label">Healthcare Coverage</label>
+                    <input type="number" min="0" max="250000" class="form-control" id="healthcareCoverage" name="healthcareCoverage"
                         required>
                     <div class="valid-feedback">
                         Looks good!
@@ -130,8 +127,8 @@
                 </div>
 
                 <div class="col-md-12">
-                    <label for="healthcare_expense" class="form-label">Current Healthcare Expense</label>
-                    <input type="number" min="0" class="form-control" id="healthcare_expense" name="healthcare_expense"
+                    <label for="healthcareExpense" class="form-label">Current Healthcare Expense</label>
+                    <input type="number" min="0" class="form-control" id="healthcareExpense" name="healthcareExpense"
                         required>
                     <div class="valid-feedback">
                         Looks good!
@@ -142,14 +139,30 @@
                 </div>
 
                 <div class="col-6 mt-5">
-                    <a class="btn btn-orange" href="/auth/addAllergies">Next</a>
+                    <a class="btn btn-orange" href="/addAllergies" onclick="passDataToNextPage()">Next</a>
                 </div>
 
             </form>
-            
     </div>
 
     <!-- Custom JS -->
+    <script>
+        const passDataToNextPage = ()=>{
+            const patient = JSON.parse(localStorage.getItem('patient'));
+            
+            patient.caregiver.fname = document.getElementById("fname").value;
+            patient.caregiver.lname = document.getElementById("lname").value;
+            patient.caregiver.email = document.getElementById("email").value;
+            patient.caregiver.contact = document.getElementById("contact").value;
+            
+            patient.healthcareCoverage = document.getElementById("healthcareCoverage").value;
+
+            patient.healthcareExpense = document.getElementById("healthcareExpense");
+            
+            console.log(patient);
+            localStorage.setItem("patient",JSON.stringify(patient));
+        }
+        </script>
     <!-- Bootstrap 5 : JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

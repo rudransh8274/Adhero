@@ -140,19 +140,15 @@ const populateModalBody = ()=>{
             <br><br>
             <b>Address</b>
             <br>
-            Plot No. : ${choosenDocDet["plot_number"]}
+            ${choosenDocDet["address"]}
             <br>
-            Landmark : ${choosenDocDet["landmark"]}
-            <br>
-            Street : ${choosenDocDet["street"]}
-            <br>
-            City : ${choosenDocDet["city"]}
+            ${choosenDocDet["city"]}
             </h6>
             <br>
             <h6>
             <b>Charges</b>
             <br>
-            Rs. ${choosenDocDet["consulting_charges"]}
+            Rs. ${choosenDocDet["charges"]}
             </h6>
         </div>
         <div>

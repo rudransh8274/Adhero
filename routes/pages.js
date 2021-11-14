@@ -42,6 +42,9 @@ router.get('/afterSearch',urlencodedParser,(req,res)=>{
 router.get('/bookDoctor',urlencodedParser,(req,res)=>{
     res.render("bookDoctor");
 });
+router.get('/patientHome',urlencodedParser,(req,res)=>{
+    res.render("patientHome");
+});
 // router.get('/afterPatLogin',urlencodedParser,(req,res)=>{
 //     res.render("afterPatLogin");
 // });

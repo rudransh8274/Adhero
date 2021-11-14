@@ -14,6 +14,7 @@ router.post('/registerPractice', authController.registerPractice);
 router.post('/afterLogin', authController.afterLogin);
 router.post('/doctorLogin', authController.doctorSignup);
 router.post('/searchDoctor', authController.searchDoctor);
+router.post('/bookingEntry', authController.bookingEntry);
 // router.post('/bookDoctor',authController.bookDoctor);
 
 
