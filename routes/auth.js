@@ -15,6 +15,9 @@ router.post('/afterLogin', authController.afterLogin);
 router.post('/doctorLogin', authController.doctorSignup);
 router.post('/searchDoctor', authController.searchDoctor);
 router.post('/bookingEntry', authController.bookingEntry);
+router.post('/addAllergies', authController.addAllergies);
+router.post('/doctorHome', authController.doctorHome);
+router.post('/adhere', authController.adhere);
 // router.post('/bookDoctor',authController.bookDoctor);
 
 

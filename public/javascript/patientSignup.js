@@ -49,7 +49,7 @@ const passDataToNextPage = ()=>{
   patient.fname = document.getElementById("fname").value;
   patient.lname = document.getElementById("lname").value;
   patient.gender = document.getElementById("gender").value;
-  patient.maritalStatus = document.getElementById("marital_status").value;
+  patient.maritalStatus = document.getElementById("marital-status").value;
   patient.race = document.getElementById("race").value;
   patient.ethnicity = document.getElementById("ethnicity").value;
   patient.email = document.getElementById("email").value;

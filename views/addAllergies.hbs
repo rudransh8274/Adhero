@@ -42,19 +42,19 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Login/Signup
                         </a>
-                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="patientLogin">Patient Login</a></li>
-                            <li><a class="dropdown-item" href="patientSignup">Patient Signup</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="doctorLogin">Doctor Login</a></li>
-                            <li><a class="dropdown-item" href="doctorSignup">Doctor Signup</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="registerPractice">Register Your Practice</a>
-                    </li>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/patientLogin">Patient Login</a></li>
+                                <li><a class="dropdown-item" href="/patientSignup">Patient Signup</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/doctorLogin">Doctor Login</a></li>
+                                <li><a class="dropdown-item" href="/doctorSignup">Doctor Signup</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registerPractice">Register Your Practice</a>
+                        </li>
                 </ul>
             </div>
         </div>
@@ -71,7 +71,7 @@
         <div class="d-flex mx-auto col-md-6">
 
             <!--form start-->
-            <form class="row g-3 needs-validation" action="" method="POST" novalidate>
+            <form class="row g-3 needs-validation" action="/auth/addAllergies" method="POST" novalidate>
 
                 <!-- LEFT : SECTION 1 -->
                 <h3 style="color: #FF9500;"> Add Allergy History </h3>
@@ -343,7 +343,6 @@
                     <button class="btn btn-orange" type="reset" onclick="addCondition()">Add</button>
                 </div>
 
-            </form>
         </div>
 
         <!-- Right -->
@@ -367,17 +366,21 @@
                 </table>
             </div>
             
-            <input type="hidden" id="finalData" name="finalData" value="">
+            <input type="hidden" id="finalData" name="finalData" >
 
             <div class="d-flex flex-row-reverse col-md-12 mt-5">
-                <button class="btn btn-orange" type="submit" onclick="finalPass()">Submit</button>
+                <a class="btn btn-orange" href="/patientLogin" onclick="finalPass()">Submit</a>
             </div>
+           
         </div>
+    </form>
+    
+</div>
 
-    </div>
+<!-- Custom JS -->
+<script>
+        const patient = JSON.parse(localStorage.getItem('patient'));
 
-    <!-- Custom JS -->
-    <script>
         const summary = document.getElementById("summary");
         // Allergies
         const allergyType = document.getElementById("allergy-type");
@@ -388,7 +391,6 @@
         const conditionStartDate = document.getElementById("condition-start-date");
         const conditionEndDate = document.getElementById("condition-end-date");
         
-        let data = [];
         let packet = {
             "desc":"",
             "startDate":"",
@@ -412,8 +414,8 @@
             packet.startDate = allergyStartDate.value;
             packet.endDate = allergyEndDate.value;
 
-            data.push(packet);
             addRowToSummaryTable(packet);
+            patient.data.push(JSON.stringify(packet));
         }
 
         let addCondition = ()=>{
@@ -422,18 +424,33 @@
             packet.endDate = conditionEndDate.value;
             packet.isAllergy = false;
             
-            data.push(packet);
             addRowToSummaryTable(packet);
+            patient.data.push(JSON.stringify(packet));
         }
 
-        const patient = JSON.parse(localStorage.getItem('patient'));
-        console.log(patient);
+        // console.log(patient);
+
+        
 
         const finalPass = ()=>{
-            patient.data.push(data);
-            const finalData = document.getElementById("finalData");
-            finalData.value = JSON.stringify(patient);
-        }
+            //console.log(patient);
+                     var url = "http://localhost:3000/auth/addAllergies"
+            var myHeaders = new Headers()
+            myHeaders.append("Content-Type", "application/json");
+                        var raw = JSON.stringify(patient)
+                        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+            };
+fetch("http://localhost:3000/auth/addAllergies", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+           
+    }
+      
 
     </script>
     <!-- Bootstrap 5 : JS -->

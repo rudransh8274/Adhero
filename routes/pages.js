@@ -45,6 +45,21 @@ router.get('/bookDoctor',urlencodedParser,(req,res)=>{
 router.get('/patientHome',urlencodedParser,(req,res)=>{
     res.render("patientHome");
 });
+router.get('/doctorHome',urlencodedParser,(req,res)=>{
+    res.render("doctorHome");
+});
+
+router.get('/viewPrescription',urlencodedParser,(req,res)=>{
+    res.render("viewPrescription");
+});
+router.get('/random',urlencodedParser,(req,res)=>{
+    res.render("random");
+});
+//Fictitious
+router.get('/adhereResponse',urlencodedParser,(req,res)=>{
+    res.render("adhereResponse");
+});
+
 // router.get('/afterPatLogin',urlencodedParser,(req,res)=>{
 //     res.render("afterPatLogin");
 // });
@@ -59,10 +74,16 @@ router.get('/auth/doctorLogin',urlencodedParser,(req,res)=>{
 router.get('/auth/afterPatLogin',urlencodedParser,(req,res)=>{
     res.render("afterPatLogin");
 });
+router.get('/auth/adhereResponse',urlencodedParser,(req,res)=>{
+    res.render("adhereResponse");
+});
 
 //can be of no use
 router.get('/auth/registerPractice',urlencodedParser,(req,res)=>{
     res.render("registerPractice");
+});
+router.get('/auth/random',urlencodedParser,(req,res)=>{
+    res.render("random");
 });
 
 

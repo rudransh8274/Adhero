@@ -14,6 +14,18 @@ const db = mysql.createConnection({
     database: process.env.Database
 });
 
+var patientIdForAllergy = 0;
+// function addAllergy(item)
+// {
+//     db.query('INSERT into allergic_conditions SET ?',{patient_id: patientIdForAllergy,description:item.desc,start_date:item.startDate,end_date:item.endDate,is_allergy:item.isAllergy},(er,re)=>{
+//         if(er){
+//             console.log(er);
+//         }else{
+//             console.log('Allergy Added');
+//         }
+//     })
+// }
+
 var patientSess;
 
 //for Patient login
@@ -81,13 +93,13 @@ exports.afterLogin = async (req, res) => {
 
 //afterDrLogin
 var doctorSess;
-exports.viewBookingsDoc = async (req, res) => {
+exports.doctorHome = async (req, res) => {
    
     try {
         const { email, password } = req.body;
       
 
-        db.query('Select * FROM doctor_login WHERE email= ?', [email], async (error, results) => {
+        db.query('Select * FROM doctor WHERE email= ?', [email], async (error, results) => {
             if(error){
                 console.log(error);
             }
@@ -139,25 +151,26 @@ exports.viewBookingsDoc = async (req, res) => {
                 res.cookie('jwt', token, cookieOptions);
 
                 //query for retreiving bookings for doctor
-                db.query('SELECT * FROM ((SELECT booking_id,patient_id,appointment_type, DATE_FORMAT(appointment_Dtime,"%Y-%m-%d %T") appointment_Dtime FROM booking WHERE doctor_id = ?) filtered_booking) LEFT JOIN ((SELECT * FROM ((SELECT patient_id, first_name, last_name, age, email FROM patient) filtered_patient) LEFT JOIN ((SELECT patient_id,contact_number contact_no FROM patient_contact group by patient_id) filtered_patient_contact) USING (patient_id)) filtered_patient_join) USING (patient_id)', [doctorSess.idss], (err, result) => {
+                // db.query('SELECT * FROM ((SELECT booking_id,patient_id,appointment_type, DATE_FORMAT(appointment_Dtime,"%Y-%m-%d %T") appointment_Dtime FROM booking WHERE doctor_id = ?) filtered_booking) LEFT JOIN ((SELECT * FROM ((SELECT patient_id, first_name, last_name, age, email FROM patient) filtered_patient) LEFT JOIN ((SELECT patient_id,contact_number contact_no FROM patient_contact group by patient_id) filtered_patient_contact) USING (patient_id)) filtered_patient_join) USING (patient_id)', [doctorSess.idss], (err, result) => {
         
-                    console.log(result);
+                //     console.log(result);
             
-                    if (err) {
-                        console.log(err);
-                    }
+                //     if (err) {
+                //         console.log(err);
+                //     }
             
-                    if (result.length === 0) {
-                        return res.render('viewBookingsDoc', {
-                            message: 'No Bookings Found',
-                            messageClass:'alert-warning'
-                        });
-                    }
-                    else{
-                        //res.status(200).redirect("/viewBookingsDoc",{bookingDetails:JSON.stringify(result)});
-                        return res.render('viewBookingsDoc',{bookingDetails:JSON.stringify(result)});
-                    }
-                });
+                //     if (result.length === 0) {
+                //         return res.render('viewBookingsDoc', {
+                //             message: 'No Bookings Found',
+                //             messageClass:'alert-warning'
+                //         });
+                //     }
+                //     else{
+                //         //res.status(200).redirect("/viewBookingsDoc",{bookingDetails:JSON.stringify(result)});
+                //         return res.render('viewBookingsDoc',{bookingDetails:JSON.stringify(result)});
+                //     }
+                // });
+                return res.render('doctorHome');
                 //below line needs to be deleted
                 //res.status(200).redirect("/viewBookingsDoc");
             }
@@ -169,24 +182,24 @@ exports.viewBookingsDoc = async (req, res) => {
 }
 
 
-exports.addAllergies =(req,res)=>{
-    const {fname, lname, email, contact, healthcare_coverage, healthcare_expense} = req.body;
+// exports.addAllergies =(req,res)=>{
+//     const {fname, lname, email, contact, healthcare_coverage, healthcare_expense} = req.body;
 
-    //error could be due to wrong query syntax
-    db.query('INSERT INTO patient WHERE patient_id=? SET ?',[], { caregiver_fname: fname, caregiver_lname: lname, caregiver_email: email, caregiver_contact:contact,healthcare_coverage:healthcare_coverage,healthcare_expense:healthcare_expense }, (error, results) => {
-        if (error) {
-            console.log(error);
-        } else {
+//     //error could be due to wrong query syntax
+//     db.query('INSERT INTO patient WHERE patient_id=? SET ?',[], { caregiver_fname: fname, caregiver_lname: lname, caregiver_email: email, caregiver_contact:contact,healthcare_coverage:healthcare_coverage,healthcare_expense:healthcare_expense }, (error, results) => {
+//         if (error) {
+//             console.log(error);
+//         } else {
 
-            return res.render('completeProfile', {
-                message: 'User Registered!',
-                messageClass:'alert-primary'
-            });
-        }
+//             return res.render('completeProfile', {
+//                 message: 'User Registered!',
+//                 messageClass:'alert-primary'
+//             });
+//         }
 
-    });
+//     });
 
-}
+// }
 
 
 exports.viewBookingsPat = (req,res) => {
@@ -212,6 +225,85 @@ exports.viewBookingsPat = (req,res) => {
             return res.render('viewBookingsPat',{bookingDetails:JSON.stringify(results)});
         }
     });
+}
+
+exports.addAllergies = (req,res) =>{
+    console.log("HERE");
+    //const {caregiver} = req.body.caregiver;
+    //console.log(req.body.caregiver.fname);
+    //console.log(caregiver.fname);
+    const caregiverFname=req.body.caregiver.fname;
+    const caregiverLname=req.body.caregiver.lname;
+    const caregiverEmail=req.body.caregiver.email;
+    const caregiverContact=req.body.caregiver.contact;
+
+    const {fname,lname,gender,maritalStatus,race,ethnicity,email,age,password,contact,address,city,county,caregiver,healthcareCoverage,healthcareExpense,data} = req.body;
+    
+    db.query('SELECT email from patient where email = ?', [email], async (error, results) => {
+        if (error) {
+            console.log(error);
+        }
+
+
+         if (results.length > 0) {
+             console.log("result lenght > 0")
+            return res.render('patientSignup', {
+                message: 'The email is already in use',
+                messageClass:'alert-warning'
+            });
+        }
+
+       // else{
+                let hashedPassword = await bcrypt.hash(password, 8);
+                console.log(hashedPassword);
+                var patID = 23;
+
+                db.query('INSERT INTO patient SET ?', { first_name: fname, gender:gender,race:race, ethnicity:ethnicity,address:address, city:city, county:county, age:age, email:email, password: hashedPassword, marital_status:maritalStatus, email: email, password: hashedPassword ,last_name: lname, contact_no:contact,caregiver_fname:caregiver.fname,caregiver_lname:caregiver.lname,caregiver_contact:caregiver.contact,caregiver_email:caregiver.email,healthcare_coverage:healthcareCoverage,healthcare_expense:healthcareExpense }, (error, results) => {
+                    if (error) {
+                        console.log(error);
+                    } else {
+
+                        db.query('Select patient_id from patient where first_name=? and last_name=?',[fname,lname], (err,res)=>{
+                            patID = res[0].patient_id;
+                            patientIdForAllergy = patID;
+                            console.log('Fetched patient id is: ',patID);
+
+                            data.forEach(addAllergy);
+                        
+                            function addAllergy(item)
+                            {
+                                console.log("Function Call initiated")
+                                
+                                item = JSON.parse(item);
+                                console.table(item);
+                                
+                                db.query('INSERT into allergic_conditions SET ?',{patient_id: patientIdForAllergy,description:item['desc'],start_date:item['startDate'],end_date:item['endDate'],is_allergy:item['isAllergy']},(er,re)=>{
+                                    if(er){
+                                        console.log(er);
+                                    }else{
+                                        console.log('Allergy Added');
+                                    }
+                                })
+                            }
+                        });
+
+                        
+                        
+                
+                        return res.render('PatientLogin', {
+                            message: 'Please LogIn into the system',
+                            messageClass:'alert-primary'
+                        });
+                    }
+
+                });
+            //}      
+
+    });
+    
+    console.log(req.body);
+    
+   // return res.render('random');
 }
 
 
@@ -252,81 +344,50 @@ exports.cancelBookingsPat = (req,res) => {
 
 //function for patient registration
 exports.patientSignup = (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
 
-    const { fname, lname, gender, marital_status,race,ethnicity,email, age, password, contact, altContact, address, city,country } = req.body;
+    // const { fname, lname, gender, marital_status,race,ethnicity,email, age, password, contact, altContact, address, city,country } = req.body;
 
-    db.query('SELECT email from patient where email = ?', [email], async (error, results) => {
-        if (error) {
-            console.log(error);
-        }
-
-
-        if (results.length > 0) {
-            return res.render('patientSignup', {
-                message: 'The email is already in use',
-                messageClass:'alert-warning'
-            });
-        }
+    // db.query('SELECT email from patient where email = ?', [email], async (error, results) => {
+    //     if (error) {
+    //         console.log(error);
+    //     }
 
 
-        let hashedPassword = await bcrypt.hash(password, 8);
-        console.log(hashedPassword);
+        // if (results.length > 0) {
+        //     return res.render('patientSignup', {
+        //         message: 'The email is already in use',
+        //         messageClass:'alert-warning'
+        //     });
+        // }
 
 
-        // db.query('INSERT INTO patient SET ?', { email: email, password: hashedPassword }, (error, results) => {
+        // let hashedPassword = await bcrypt.hash(password, 8);
+        // console.log(hashedPassword);
+
+
+        // db.query('INSERT INTO patient SET ?', { first_name: fname, last_name: lname, email: email,password: hashedPassword, gender:gender, marital_status:marital_status, race:race,contact_no:contact, alt_contact:altContact, ethnicity: ethnicity, age: age, address: address, city: city,country:country }, (error, results) => {
         //     if (error) {
         //         console.log(error);
         //     } else {
-        //         console.log(results);
-
-        //     }
-        // });
 
 
-        db.query('INSERT INTO patient SET ?', { first_name: fname, last_name: lname, email: email,password: hashedPassword, gender:gender, marital_status:marital_status, race:race,contact_no:contact, alt_contact:altContact, ethnicity: ethnicity, age: age, address: address, city: city,country:country }, (error, results) => {
-            if (error) {
-                console.log(error);
-            } else {
 
-        // db.query('select max(patient_id) lastPatient from patient',(err,resu)=>{
-
-        //         db.query('INSERT INTO patient_contact SET ?',{patient_id:resu[0].lastPatient,contact_number:contact},(error,results)=>{
-        //             if(error)
-        //             {
-        //                 console.log(error);
-        //             }else{
-        //                     console.log(results);
-        
-        //             }
-        //         });
-
-        //         For alternate contact number
-        //         db.query('INSERT INTO patient_contact SET ?',{patient_id:resu[0].lastPatient,contact_number:altContact},(error,results)=>{
-        //             if(error)
-        //             {
-        //                 console.log(error);
-        //             }else{
-        //                     console.log(results);
-        
-        //             }
-        //         });
-
-        //     });
+   
 
                 return res.render('completeProfile', {
                     message: 'User Registered!',
                     messageClass:'alert-primary'
                 });
-            }
+          //  }-------------------------->for else
 
-        });
+        //});
 
         
 
 
 
-    });
+   // });
 
     // res.send("Form Submitted");
 }
@@ -522,6 +583,14 @@ exports.registerPractice = (req, res) => {
 
 
 }
+
+//Adherence Calculation
+exports.adhere = (req,res) => {
+    const patientId = patientSess.ids;
+    db.query('Select  ')
+    return res.render('adhereResponse');
+}
+
 
 //Booking
 exports.bookingEntry = (req, res) => {

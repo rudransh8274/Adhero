@@ -72,7 +72,7 @@
 
         <!--Form Starting-->
 
-        <form class="row g-3 needs-validation" action="/auth/patientLogin" method="POST" oninput="mySignupValidator()"
+        <form class="row g-3 needs-validation" method="POST" oninput="mySignupValidator()"
             novalidate>
 
             <div class="col-md-6">
@@ -105,7 +105,7 @@
 
             <div class="col-md-3">
                 <label for="marital-status" class="form-label">Marital Status</label>
-                <select class="form-select" id="marital-status" name="marital_status">
+                <select class="form-select" id="marital-status" name="marital-status">
                     <option selected value=""></option>
                     <option value="single">Single</option>
                     <option value="married">Married</option>
@@ -182,8 +182,8 @@
             </div>
 
             <div class="col-md-6">
-                <label for="contact-no" class="form-label">Contact Number</label>
-                <input type="tel" class="form-control" id="contact-no" name="contact" pattern="[0-9]{10}" required>
+                <label for="contact" class="form-label">Contact Number</label>
+                <input type="tel" class="form-control" id="contact" name="contact" pattern="[0-9]{10}" required>
                 <!-- <input id="contact-no" type="tel" pattern="^\d{4}-\d{3}-\d{4}$" required > -->
                 <div class="valid-feedback">
                     Looks good!
@@ -194,8 +194,8 @@
             </div>
 
             <div class="col-md-6">
-                <label for="alt-contact-no" class="form-label">Alternative Contact Number</label>
-                <input type="tel" class="form-control" id="alt-contact-no" name="altContact" pattern="[0-9]{10}"
+                <label for="altContact" class="form-label">Alternative Contact Number</label>
+                <input type="tel" class="form-control" id="altContact" name="altContact" pattern="[0-9]{10}"
                     placeholder="Optional">
                 <div class="valid-feedback">
                     Looks good!
@@ -222,8 +222,8 @@
             </div>
 
             <div class="col-md-3">
-                <label for="country" class="form-label">Country</label>
-                <select class="form-select" id="country" name="country" required>
+                <label for="county" class="form-label">County</label>
+                <select class="form-select" id="county" name="county" required>
                     <option selected disabled value=""></option>
                     <option value="Barnstable">Barnstable</option>
                     <option value="Berkshire">Berkshire</option>
@@ -257,7 +257,7 @@
                 </div>
             </div>
             <div class="col-12 mt-3">
-                <button class="btn btn-orange btn-outline" type="submit">Submit form</button>
+                <a  href="/completeProfile" class="btn btn-orange btn-outline" onclick="passDataToNextPage()">Submit</a>
             </div>
         </form>
     </div>

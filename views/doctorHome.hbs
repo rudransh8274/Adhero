@@ -25,6 +25,20 @@
   padding: 20px;
  
 }
+.card:hover{
+    box-shadow: 8px 8px 5px blue;    
+    transform: scale(1.1);
+    transition: 0.5s;
+
+}
+.card{
+    box-shadow: none;    
+    transform: scale(1);
+    transition: 0.5s;
+
+}
+
+
     </style>
 </head>
 
@@ -50,7 +64,7 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Login/Signup
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="patientLogin">Patient Login</a></li>
                             <li><a class="dropdown-item" href="patientSignup">Patient Signup</a></li>
                             <li>
@@ -70,7 +84,7 @@
 
     <!-- Page Title -->
     <header class="page-header mx-auto col-md-7 my-4">
-        <h1 class="page-title fw-bold">Welcome Patient {Name of the Patient} ! </h1>
+        <h1 class="page-title fw-bold">Welcome Doctor {Name of the Doctor} ! </h1>
     </header>
 
 
@@ -81,11 +95,11 @@
 
 
        
-        <div class="card text-dark my-5 mx-5" style="width: 18rem; height :24rem;" id="rcorners"><br>
+        <div class="card text-dark my-5 mx-5" style="width: 18rem; height :22rem;" id="rcorners">
             <img class="card-img-top" src="/images/doctor.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
-              <h5 class="card-title fw-bold"> Search Doctors and Book an Appointment</h5>
-              <a href="searchDoctor" class="btn btn-primary">Click Here</a>
+              <h5 class="card-title fw-bold">Doctor Home</h5>
+              <a href="#" class="btn btn-success">Click Here</a>
             </div>
           </div>
 
@@ -93,24 +107,21 @@
 
 
        
-          <div class="card text-dark my-5 mx-5" style="width: 18rem; height :24rem;" id="rcorners"><br>
+          <div class="card text-dark my-5 mx-5" style="width: 18rem; height :22rem;" id="rcorners">
             <img class="card-img-top" src="/images/medicalprescription.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
-              <h5 class="card-title fw-bold">Check Your Medical Prescriptions</h5>
-              <a href="#" class="btn btn-primary">Click Here</a>
+              <h5 class="card-title fw-bold">Update Medical Prescriptions</h5>
+              <a href="#" class="btn btn-success">Click Here</a>
             </div>
           </div>
     
 
        
-          <div class="card text-dark my-5 mx-5" style="width: 18rem; height :24rem;" id="rcorners"><br>
+          <div class="card text-dark my-5 mx-5" style="width: 18rem; height :22rem;" id="rcorners">
             <img class="card-img-top" src="/images/adherence.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
-              <h5 class="card-title fw-bold">Check Your Adherence Rate</h5>
-              <form action="/auth/adhere" method="post">
-                <button  type="hidden" class="btn btn-primary">Click Here</button>
-              </form>
-              
+              <h5 class="card-title fw-bold">Check Adherence Rates using Patient ID</h5>
+              <a href="#" class="btn btn-success">Click Here</a>
             </div>
         </div>
 
@@ -120,31 +131,31 @@
         <div class="row">
           
            
-          <div class="card text-dark my-5 mx-5" style="width: 18rem; height :24rem;" id="rcorners"><br>
+          <div class="card text-dark my-5 mx-5" style="width: 18rem; height :22rem;" id="rcorners">
             <img class="card-img-top" src="/images/appointments.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
               <h5 class="card-title fw-bold">Check Previous Appointments</h5>
-              <a href="#" class="btn btn-primary">Click Here</a>
+              <a href="#" class="btn btn-success">Click Here</a>
             </div>
           </div>
           
 
          
-          <div class="card text-dark my-5 mx-5" style="width: 18rem; height :24rem;" id="rcorners"><br>
+          <div class="card text-dark my-5 mx-5" style="width: 18rem; height :22rem;" id="rcorners">
             <img class="card-img-top" src="/images/medical.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
-              <h5 class="card-title fw-bold">Check Medical Reports</h5>
-              <a href="#" class="btn btn-primary">Click Here</a>
+              <h5 class="card-title fw-bold">Update Patient's Medical Reports</h5>
+              <a href="#" class="btn btn-success">Click Here</a>
             </div>
           </div>
          
 
          
-          <div class="card text-dark my-5 mx-5" style="width: 18rem; height :24rem;" id="rcorners"><br>
+          <div class="card text-dark my-5 mx-5" style="width: 18rem; height :22rem;" id="rcorners">
             <img class="card-img-top" src="/images/operations.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
-              <h5 class="card-title fw-bold">Check Past Operations History</h5>
-              <a href="#" class="btn btn-primary">Click Here</a>
+              <h5 class="card-title fw-bold">Update Operations History</h5>
+              <a href="#" class="btn btn-success">Click Here</a>
             </div>
           
           </div>

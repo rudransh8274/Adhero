@@ -68,7 +68,7 @@
     <div class="d-flex mx-auto col-md-5">
 
             <!--form start-->
-            <form class="row g-3 needs-validation" action="" method="POST" novalidate>
+            <form class="row g-3 needs-validation"  method="POST" novalidate>
 
                 <!-- SECTION 1 -->
                 <h3 style="color: #FF9500;"> Add Caregiver Details</h3>
@@ -139,7 +139,7 @@
                 </div>
 
                 <div class="col-6 mt-5">
-                    <a class="btn btn-orange" href="/addAllergies" onclick="passDataToNextPage()">Next</a>
+                <a href="/addAllergies" class="btn btn-orange btn-outline" onclick="passDataToNextPage()">Submit</a>
                 </div>
 
             </form>
@@ -148,7 +148,7 @@
     <!-- Custom JS -->
     <script>
         const passDataToNextPage = ()=>{
-            const patient = JSON.parse(localStorage.getItem('patient'));
+       const patient = JSON.parse(localStorage.getItem('patient'));
             
             patient.caregiver.fname = document.getElementById("fname").value;
             patient.caregiver.lname = document.getElementById("lname").value;
@@ -157,10 +157,11 @@
             
             patient.healthcareCoverage = document.getElementById("healthcareCoverage").value;
 
-            patient.healthcareExpense = document.getElementById("healthcareExpense");
+            patient.healthcareExpense = document.getElementById("healthcareExpense").value;
             
             console.log(patient);
             localStorage.setItem("patient",JSON.stringify(patient));
+        
         }
         </script>
     <!-- Bootstrap 5 : JS -->
