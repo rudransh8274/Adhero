@@ -18,6 +18,9 @@ router.post('/bookingEntry', authController.bookingEntry);
 router.post('/addAllergies', authController.addAllergies);
 router.post('/doctorHome', authController.doctorHome);
 router.post('/adhere', authController.adhere);
+router.post('/viewBookingsPat', authController.viewBookingsPat);
+router.post('/addPrescription', authController.addPrescription);
+router.post('/addingPrescription', authController.addingPrescription);//after doctor filled form
 // router.post('/bookDoctor',authController.bookDoctor);
 
 

@@ -96,22 +96,26 @@
 
        
         <div class="card text-dark my-5 mx-5" style="width: 18rem; height :22rem;" id="rcorners">
-            <img class="card-img-top" src="/images/doctor.jpg" alt="Card image cap" style="height: 200px;" >
+            <img class="card-img-top" src="/images/appointments.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
-              <h5 class="card-title fw-bold">Doctor Home</h5>
-              <a href="#" class="btn btn-success">Click Here</a>
+              <h5 class="card-title fw-bold">Check Appointments</h5>
+               
+              <form action="/auth/viewBookingsDoc" method="POST">
+              <button type = "submit" class="link btn btn-success" >Click Here</button>
+            </form>
+              {{!-- <a href="#" class="btn btn-success">Click Here</a> --}}
             </div>
           </div>
 
       
-
-
-       
           <div class="card text-dark my-5 mx-5" style="width: 18rem; height :22rem;" id="rcorners">
             <img class="card-img-top" src="/images/medicalprescription.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
-              <h5 class="card-title fw-bold">Update Medical Prescriptions</h5>
-              <a href="#" class="btn btn-success">Click Here</a>
+              <h5 class="card-title fw-bold">Add Prescription</h5>
+              <form action="/auth/addPrescription" method="POST">
+                <button type="submit" class="link btn btn-success" >Click Here</button>
+              </form>
+              {{!-- <a href="#" class="btn btn-success">Click Here</a> --}}
             </div>
           </div>
     
@@ -132,7 +136,7 @@
           
            
           <div class="card text-dark my-5 mx-5" style="width: 18rem; height :22rem;" id="rcorners">
-            <img class="card-img-top" src="/images/appointments.jpg" alt="Card image cap" style="height: 200px;" >
+            <img class="card-img-top" src="/images/doctor.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
               <h5 class="card-title fw-bold">Check Previous Appointments</h5>
               <a href="#" class="btn btn-success">Click Here</a>

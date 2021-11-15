@@ -17,7 +17,7 @@
         rel="stylesheet">
     <title>Adhero Add Patient's Prescription</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 
 <body>
@@ -42,19 +42,19 @@
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Login/Signup
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="patientLogin">Patient Login</a></li>
-                            <li><a class="dropdown-item" href="patientSignup">Patient Signup</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="doctorLogin">Doctor Login</a></li>
-                            <li><a class="dropdown-item" href="doctorSignup">Doctor Signup</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="registerPractice">Register Your Practice</a>
-                    </li>
+                          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/patientLogin">Patient Login</a></li>
+                                <li><a class="dropdown-item" href="/patientSignup">Patient Signup</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/doctorLogin">Doctor Login</a></li>
+                                <li><a class="dropdown-item" href="/doctorSignup">Doctor Signup</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registerPractice">Register Your Practice</a>
+                        </li>
                 </ul>
             </div>
         </div>
@@ -70,12 +70,12 @@
 
         <!--Form starting-->
 
-        <form class="row g-3 needs-validation" oninput="mySignupValidator()" action="/auth/doctorSignup" method="POST"
+        <form id="mainform" class="row g-3 needs-validation" action="/auth/addingPrescription" method="POST"
             novalidate>
 
-            <div class="col-md-2">
-                <label for="patient-id" class="form-label">Patient's ID</label>
-                <input type="number" min="1" max="10000" class="form-control" id="patient-id" name="patient-id" required>
+             <div class="col-md-8">
+                <label for="patientid" class="form-label">Patient ID </label>
+                <input type="text" class="form-control" id="patientid" name="patientid" required>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
@@ -83,30 +83,8 @@
                     Mandatory !
                 </div>
             </div>
-
-            <div class="col-md-5">
-                <label for="fname" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="fname" name="fname" placeholder="John" required>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-                <div class="invalid-feedback">
-                    Mandatory !
-                </div>
-            </div>
-
-            <div class="col-md-5">
-                <label for="lname" class="form-label">Last name</label>
-                <input type="text" class="form-control" id="lname" name="lname" placeholder="Doe" required>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-                <div class="invalid-feedback">
-                    Mandatory !
-                </div>
-            </div>
-
-
+           
+        
             <div class="col-md-6">
                 <label for="sdate" class="form-label">Starting Prescription Date </label>
                 <input type="date" class="form-control" id="sdate" name="sdate" required>
@@ -133,7 +111,7 @@
           
             <div class="col-md-12">
                 <label for="symptoms" class="form-label">Patient's Symptoms</label>
-                <textarea class="form-control" id="symptoms" rows="3" required></textarea>
+                <textarea class="form-control" id="symptoms" name="symptoms" rows="3" required></textarea>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
@@ -146,9 +124,12 @@
            
             <div id="medicine" class="my-3 card card-body bg-dark text-light">
                 <h4 class="fw-bold">Add New Medicine</h4>
-                <label for="medicinename" class="form-label">Name of Dose</label>
+                <label for="medicinename" class="form-label">Name of Dose &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; Dosage Cost</label>
+
                 <div class="d-inline">
                 <input type="text" id="medicinename" placeholder="Eg Dolo" class="col-md-3">
+                <input type="number" id="medicinecost" class="col-md-3 mx-3">
+
                
                 <div class="form-check form-check-inline mx-2">
                     <input class="form-check-input" type="checkbox" id="morning" value="option1">
@@ -171,6 +152,7 @@
                 <thead>
                   <tr>
                     <th scope="col">Name of Dosage</th>
+                    <th scope="col">Cost of the Dosage</th>
                     <th scope="col">Morning</th>
                     <th scope="col">Afternoon</th>
                     <th scope="col">Dinner</th>
@@ -181,10 +163,48 @@
                 
                 </tbody>
               </table>
+                
+            <h5 class="fw-bold">Add Operation</h5>
+
+              <div class="col-md-4">
+                <label for="operation" class="form-label">Operation Required</label>
+                <input type="text" class="form-control" id="operation" name="operation">
+            </div>
+
+            <div class="col-md-4">
+                <label for="operationcost" class="form-label">Operation Charges</label>
+                <input type="number" class="form-control" id="operationcost" name="operationcost">
+            </div>
+
+            <div class="col-md-3 my-5">
+                <button class="btn btn-success" type="button" onclick="addOperation()">Add</button>
+            </div>
+
+
+
+                     
+            <table id="operationtable" class="table table-dark table-striped my-4">
+                <thead>
+                  <tr>
+                  <th scope="col">Name of Operation</th>
+                  <th scope="col">Cost of Operation</th>
+                  <th scope="col">Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                
+                </tbody>
+              </table>
+
+
+
+
            
+        <input name="data-house" id="send-data" type="hidden"/>
+
 
             <div class="col-3 mt-3">
-                <button class="btn btn-orange" type="submit">Submit</button>
+                <button type="button" class="btn btn-orange" onclick="printobject()">Submit</button>
             </div>
 
         

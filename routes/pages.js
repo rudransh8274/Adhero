@@ -27,6 +27,7 @@ router.get('/patientSignup',urlencodedParser,(req,res)=>{
 router.get('/addPrescription',urlencodedParser,(req,res)=>{
     res.render("addPrescription");
 });
+
 router.get('/addAllergies',urlencodedParser,(req,res)=>{
     res.render("addAllergies");
 });
@@ -54,6 +55,9 @@ router.get('/viewPrescription',urlencodedParser,(req,res)=>{
 });
 router.get('/random',urlencodedParser,(req,res)=>{
     res.render("random");
+});
+router.get('/viewBookingsPat',urlencodedParser,(req,res)=>{
+    res.render("viewBookingsPat");
 });
 //Fictitious
 router.get('/adhereResponse',urlencodedParser,(req,res)=>{

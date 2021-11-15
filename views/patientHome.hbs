@@ -30,6 +30,9 @@
 
 <body>
     <!-- Navbar -->
+        {{#if message}}
+            <h4 class='alert {{messageClass}} mt-4'>{{message}}</h4>
+        {{/if}}
     <nav class=" navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -70,7 +73,7 @@
 
     <!-- Page Title -->
     <header class="page-header mx-auto col-md-7 my-4">
-        <h1 class="page-title fw-bold">Welcome Patient {Name of the Patient} ! </h1>
+        <h1 class="page-title fw-bold">Welcome Patient {{name}} ! </h1>
     </header>
 
 
@@ -123,8 +126,14 @@
           <div class="card text-dark my-5 mx-5" style="width: 18rem; height :24rem;" id="rcorners"><br>
             <img class="card-img-top" src="/images/appointments.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
-              <h5 class="card-title fw-bold">Check Previous Appointments</h5>
-              <a href="#" class="btn btn-primary">Click Here</a>
+              <h5 class="card-title fw-bold">Check your Appointments</h5>
+              
+            <form action="/auth/viewBookingsPat" method="POST">
+              <button class="link btn btn-primary" >Click Here</button>
+            </form>
+
+
+              {{!-- <a href="/viewBookingsPat" class="btn btn-primary">Click Here</a> --}}
             </div>
           </div>
           

@@ -91,7 +91,7 @@ exports.afterLogin = async (req, res) => {
     }
 }
 
-//afterDrLogin
+
 var doctorSess;
 exports.doctorHome = async (req, res) => {
    
@@ -182,24 +182,83 @@ exports.doctorHome = async (req, res) => {
 }
 
 
-// exports.addAllergies =(req,res)=>{
-//     const {fname, lname, email, contact, healthcare_coverage, healthcare_expense} = req.body;
+exports.viewBookingsDoc = async (req, res) => {
+   
+    try {
+       // const { email, password } = req.body;
+            
+           
+                //creating session
+                // db.query('select * from doctor where email=?',[email],(err,result)=>{
+                //     if(err)
+                //     {
+                //         console.log(err);
+                //     }else{
+                        
+                //         sess=req.session;
+                //         console.log(sess);
+                //         sess.doc={};
+                //         //sess.doc.city=result[0].city;
+                //         sess.doc.clinic=result[0].clinic_id;
+                //         sess.doc.idss=result[0].doctor_id;
 
-//     //error could be due to wrong query syntax
-//     db.query('INSERT INTO patient WHERE patient_id=? SET ?',[], { caregiver_fname: fname, caregiver_lname: lname, caregiver_email: email, caregiver_contact:contact,healthcare_coverage:healthcare_coverage,healthcare_expense:healthcare_expense }, (error, results) => {
-//         if (error) {
-//             console.log(error);
-//         } else {
+                        
+                //        // console.log(sess.patient);
+                //         doctorSess=Object.assign(sess.doc);
+                        
+                //         console.log(doctorSess);
+                
+                //     }
+                // });
 
-//             return res.render('completeProfile', {
-//                 message: 'User Registered!',
-//                 messageClass:'alert-primary'
-//             });
-//         }
+                
+                // const id = results[0].id;
+                // const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+                //     expiresIn: process.env.JWT_EXPIRES_IN
+                // });
+                // console.log("Token is: " + token);
 
-//     });
+                // const cookieOptions = {
+                //     expires: new Date(
+                //         Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+                //     ),
+                //     httpOnly: true
+                // }
+                // res.cookie('jwt', token, cookieOptions);
 
-// }
+                //query for retreiving bookings for doctor
+                db.query('SELECT * FROM ((SELECT patient_id,appointment_type, DATE_FORMAT(appointment_Dtime,"%Y-%m-%d %T") appointment_Dtime FROM appointment WHERE doctor_id = ?) filtered_booking) LEFT JOIN ((SELECT * FROM ((SELECT patient_id, first_name, last_name, age, email FROM patient) filtered_patient) LEFT JOIN ((SELECT patient_id, contact_no FROM patient_contact group by patient_id) filtered_patient_contact) USING (patient_id)) filtered_patient_join) USING (patient_id)', [doctorSess.idss], (err, result) => {
+        
+                    console.log(result);
+            
+                    if (err) {
+                        console.log(err);
+                    }
+            
+                    if (result.length === 0) {
+                        return res.render('viewBookingsDoc', {
+                            message: 'No Bookings Found',
+                            messageClass:'alert-warning'
+                        });
+                    }
+                    else{
+                        //res.status(200).redirect("/viewBookingsDoc",{bookingDetails:JSON.stringify(result)});
+                        return res.render('viewBookingsDoc',{bookingDetails:JSON.stringify(result)});
+                    }
+                });
+                //below line needs to be deleted
+                //res.status(200).redirect("/viewBookingsDoc");
+            
+        
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+exports.addPrescription = (req,res) =>{
+    return res.render('addPrescription');
+}
 
 
 exports.viewBookingsPat = (req,res) => {
@@ -207,7 +266,7 @@ exports.viewBookingsPat = (req,res) => {
 
     // const { name, email, contact, plot, landmark, street, city } = req.body;
 
-    db.query('SELECT DATE_FORMAT(appointment_Dtime,"%Y-%m-%d %T") appointment_Dtime,appointment_type,booking_id,booking.doctor_id,first_name,last_name,consulting_charges,degree,specialization,clinic_name,plot_number,landmark,street,city from booking left join (SELECT doctor_id,clinic_id,first_name,last_name,consulting_charges,degree,specialization,clinic_name,plot_number,landmark,street,city FROM doctor JOIN clinic using (clinic_id) where city=?) as doc_clinic on booking.doctor_id=doc_clinic.doctor_id where booking.patient_id = ?', [patientSess.city,patientSess.ids], (error, results) => {
+    db.query('SELECT DATE_FORMAT(appointment_Dtime,"%Y-%m-%d %T") appointment_Dtime,appointment_type,appointment_id,appointment.doctor_id,first_name,last_name,charges,degree,specialization,clinic_name,city from appointment left join (SELECT doctor_id,clinic_id,first_name,last_name,charges,degree,specialization,clinic_name,city FROM doctor JOIN clinic using (clinic_id) where city=?) as doc_clinic on appointment.doctor_id=doc_clinic.doctor_id where appointment.patient_id = ?', [patientSess.city,patientSess.ids], (error, results) => {
         
         console.log(results);
 
@@ -226,6 +285,66 @@ exports.viewBookingsPat = (req,res) => {
         }
     });
 }
+
+exports.addingPrescription = (req,res) =>{
+    var presId = 0;
+    console.log("reqbody below");
+    console.log(req.body);
+    const {operations,medicines,form_elements} = req.body;
+
+    db.query('INSERT into prescriptions set ?',{patient_id:form_elements.patientid,prescription_start:form_elements.sdate,prescription_end:form_elements.edate,symptoms:form_elements.symptoms},(err,result)=>{
+        if(err){
+            console.log(err)
+        }else{
+            //console.log("inserted into presciptions table")
+
+        }
+    });
+
+
+    operations.forEach(myFunction);
+     function myFunction(item)
+     {
+         console.log(typeof(item));
+         db.query('Insert into operations set ?',{patient_id:form_elements.patientid,doctor_id:doctorSess.idss,operation_desc:item.name,operation_cost:item.cost},(e,r)=>{
+             if(e){
+                 console.log(e);
+             }else{
+                 //console.log("Inserted into operations table");
+             }
+         });
+     }
+
+     db.query('select max(prescription_id) as maxId from prescriptions',(error,result)=>{
+        console.log(result);
+        if(error){
+            console.log(error);
+        }else{
+           presId = result[0].maxId;
+           console.log('prescription id: ',presId);
+
+           medicines.forEach(myFunction2);
+            function myFunction2(items)
+            {
+                db.query('Insert into medicines set ?',{prescription_id:presId,medicine:items.name,cost:items.cost,breakfast:items.morning,lunch:items.afternoon,dinner:items.dinner},(errors,results)=>{
+                    if(errors)
+                    {
+                        console.log(errors);
+                    }else{
+                        console.log('Inserted into medicines table');
+                    }
+                })
+            }
+        }
+    });
+
+
+     
+
+    
+
+}
+
 
 exports.addAllergies = (req,res) =>{
     console.log("HERE");
