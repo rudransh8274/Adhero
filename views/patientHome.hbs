@@ -100,7 +100,10 @@
             <img class="card-img-top" src="/images/medicalprescription.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
               <h5 class="card-title fw-bold">Check Your Medical Prescriptions</h5>
-              <a href="#" class="btn btn-primary">Click Here</a>
+              <form action="/auth/viewPrescription" method="post">
+                <button  type="hidden" class="btn btn-primary">Click Here</button>
+              </form>
+              {{!-- <a href="#" class="btn btn-primary">Click Here</a> --}}
             </div>
           </div>
     
@@ -110,7 +113,7 @@
             <img class="card-img-top" src="/images/adherence.jpg" alt="Card image cap" style="height: 200px;" >
             <div class="card-body">
               <h5 class="card-title fw-bold">Check Your Adherence Rate</h5>
-              <form action="/auth/adhere" method="post">
+              <form action="/auth/adhereResponse" method="post">
                 <button  type="hidden" class="btn btn-primary">Click Here</button>
               </form>
               

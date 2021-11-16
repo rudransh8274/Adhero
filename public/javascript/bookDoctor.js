@@ -2,7 +2,9 @@ const choosenDocDet = JSON.parse(localStorage.getItem("choosenDocDet"));
 const pageTitle = document.getElementsByClassName("page-title")[0];
 pageTitle.innerText = pageTitle.innerText +" "+ choosenDocDet["first_name"] +" "+ choosenDocDet["last_name"];
 
-document.getElementById("docId").value=`${choosenDocDet.doctor_id}`;
+document.getElementById("docId").value=choosenDocDet.doctor_id;
+document.getElementById("docCharges").value=choosenDocDet.charges;
+
 console.log(document.getElementById("docId").value);
 // Date Ranger --> Begin
 const dateFormater = (inputDate)=>{

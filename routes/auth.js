@@ -17,9 +17,14 @@ router.post('/searchDoctor', authController.searchDoctor);
 router.post('/bookingEntry', authController.bookingEntry);
 router.post('/addAllergies', authController.addAllergies);
 router.post('/doctorHome', authController.doctorHome);
-router.post('/adhere', authController.adhere);
+//router.post('/adhere', authController.adhere);
 router.post('/viewBookingsPat', authController.viewBookingsPat);
+router.post('/viewBookingsDoc', authController.viewBookingsDoc);
+router.post('/viewPrescription', authController.viewPrescription);
 router.post('/addPrescription', authController.addPrescription);
+router.post('/cancelBookingsPat', authController.cancelBookingsPat);
+router.post('/adhereResponse', authController.adhereResponse);
+router.post('/viewFullPrescription', authController.viewFullPrescription);
 router.post('/addingPrescription', authController.addingPrescription);//after doctor filled form
 // router.post('/bookDoctor',authController.bookDoctor);
 

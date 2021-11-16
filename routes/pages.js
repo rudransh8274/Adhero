@@ -59,6 +59,9 @@ router.get('/random',urlencodedParser,(req,res)=>{
 router.get('/viewBookingsPat',urlencodedParser,(req,res)=>{
     res.render("viewBookingsPat");
 });
+router.get('/viewBookingsDoc',urlencodedParser,(req,res)=>{
+    res.render("viewBookingsDoc");
+});
 //Fictitious
 router.get('/adhereResponse',urlencodedParser,(req,res)=>{
     res.render("adhereResponse");
@@ -80,6 +83,15 @@ router.get('/auth/afterPatLogin',urlencodedParser,(req,res)=>{
 });
 router.get('/auth/adhereResponse',urlencodedParser,(req,res)=>{
     res.render("adhereResponse");
+});
+router.get('/auth/viewBookingsDoc',urlencodedParser,(req,res)=>{
+    res.render("viewBookingsDoc");
+});
+router.get('/auth/viewPrescription',urlencodedParser,(req,res)=>{
+    res.render("viewPrescription");
+});
+router.get('/auth/viewFullPrescription',urlencodedParser,(req,res)=>{
+    res.render("viewFullPrescription");
 });
 
 //can be of no use

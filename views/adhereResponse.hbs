@@ -1,12 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <!-- font-family: 'Montserrat', sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>Adhero Adherence Report</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/index.css">
 </head>
+
 <body>
-    <p>Adherence Count</p>
+    <!-- Navbar -->
+    <nav class=" navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo-large.png" style="height:100px; width:100px;" alt="brand-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Login/Signup
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/patientLogin">Patient Login</a></li>
+                                <li><a class="dropdown-item" href="/patientSignup">Patient Signup</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/doctorLogin">Doctor Login</a></li>
+                                <li><a class="dropdown-item" href="/doctorSignup">Doctor Signup</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registerPractice">Register Your Practice</a>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Title -->
+    <header class="page-header mx-auto col-md-7 my-4">
+        <h1 class="page-title fw-bold">Adherence Report for Patient XYZ </h1>
+    </header>
+
+
+    <div class="mx-auto col-md-7">
+
+        <!--Form starting-->
+
+       <h3 class="my-3"><b class="text-info">Patient's Name: &nbsp;</b> Mr. Rudransh Joshi</h3>
+     
+       <h3 class="my-3"><b class="text-info">Age: &nbsp;</b> 20 yrs</h3>
+
+       <h3 class="my-3"><b class="text-info">Adherence Level &nbsp;</b> <p style="display: inline;" id="adherence"></p></h3>
+
+
+       <div class="row my-5 mx-auto">
+       <div class="card mdb-color text-light bg-dark z-depth-2">
+        <div class="card-header"><h3 class="fw-bold">Factors that make you stand here: </h3></div>
+        <div class="card-body">
+            <ul id="adherence-factor" style="font-size: 20px;">
+             
+            </ul>
+        </div>
+    </div>
+            </div>
+            </div>
+
+
+       <div class="row my-5 mx-5">
+        <div class="col-md-5 mx-auto">
+            
+            <div class="card mdb-color text-light bg-success z-depth-2">
+                <div class="card-header"><h3 class="fw-bold">Do's</h3></div>
+                <div class="card-body">
+                    <ul style="font-size: 20px;">
+                        <li>Maintain a proper diet, and excersise regularly.</li>
+                        <li>Visit a doctor regularly for health checkups.</li>
+                        <li>Kindly consult your doctor if you have any doubts regarding the drug prescribed to you by the doctor.</li>
+                        <li>Take a proper sleep of 6-8 hours.</li>
+                        <li>Maintain Proper Hygiene and avoid street food.</li>
+                        <li>Enjoy your life !!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 mx-auto">
+         
+            <div class="card mdb-color text-light bg-danger z-depth-2">
+                <div class="card-header"><h3 class="fw-bold">Dont's</h3></div>
+                    <div class="card-body">
+                       <ul style="font-size: 20px;">
+                             <li>Please follow the prescription described by doctor.</li>
+                        <li>Patients are advised to complete the medical course given to them. It shouldn't be left in middle.</li>
+                        <li>Don't eat food stuffs that have been recommended by the doctor to be avoided.</li>
+                        <li>If you are feeling uncomfortable, you should immediately seek a doctor.</li>
+                        <li>Never hesitate to tell your symptomps to a doctor.</li>
+                       </ul>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+    </div><br><br>
+
+    <!-- Custom JS -->
+    <script >
+        var finalRes = {{{finalResponse}}};
+        var finalRes2 = JSON.parse(finalRes);
+        //console.log(finalRes);
+        let adherence_level = finalRes2.group;
+        console.log(adherence_level);
+
+
+if (adherence_level === 1){
+    var elem = document.getElementById("adherence")
+    elem.style.color = "red"
+    elem.innerHTML = 'Very Low (Upto 25% Only)'
+    var list = document.getElementById("adherence-factor")
+    
+    
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("You have lot of allergies and Conditions in the past."));
+    list.appendChild(li);
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("Your annual Health Care Expenditure is too high"));
+    list.appendChild(li);
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("You have various appointments under Emergency , UrgentCare and Ambulatory Category"));
+    list.appendChild(li);
+
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("Your geographical location is most likely to be unsuitable."));
+    list.appendChild(li);
+
+
+}else if(adherence_level === 0){
+    var elem = document.getElementById("adherence")
+    elem.style.color = "#E32636"
+    elem.innerHTML = 'Low (Upto 50% Only)'
+    var list = document.getElementById("adherence-factor")
+
+
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("You have significant of allergies and Conditions in the past."));
+    list.appendChild(li);
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("Your annual Health Care signaficantly higer"));
+    list.appendChild(li);
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("You had lot of appointments in the past"));
+    list.appendChild(li);
+
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("Your geographical location is most likely to be unsuitable."));
+    list.appendChild(li);
+
+
+}else if(adherence_level === 2){
+
+    var elem = document.getElementById("adherence")
+    elem.style.color = "orange"
+    elem.innerHTML = 'Medium (Upto 75% Only)'
+    var list = document.getElementById("adherence-factor")
+
+
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("You have fewer of allergies and Conditions in the past."));
+    list.appendChild(li);
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("Your annual Health Care above avergae"));
+    list.appendChild(li);
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("You had quite appointments in the past"));
+    list.appendChild(li);
+
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("Your geographical location is most likely to be suitable"));
+    list.appendChild(li);
+ 
+}else if(adherence_level === 3){
+   
+    var elem = document.getElementById("adherence")
+    elem.style.color = "green"
+    elem.innerHTML = 'High (Upto 100% Only)'
+    var list = document.getElementById("adherence-factor")
+
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("You had very less number of allergies and conditions"));
+    list.appendChild(li);
+
+
+    
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("You had frequent checkups in past which is great!!"));
+    list.appendChild(li);
+
+
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("Your Health Care Expenditure is below average"));
+    list.appendChild(li);
+
+    
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("Your Geographical Location is most likely to be suitable!"));
+    list.appendChild(li);
+
+   
+}else{
+    console.log("Invalid Adherence Level")
+}
+    </script>
+    <!-- Bootstrap 5 : JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

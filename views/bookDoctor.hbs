@@ -61,6 +61,7 @@
         <form class="row g-3 needs-validation" id="bookingForm" action="/auth/bookingEntry" method="POST" novalidate>
 
             <input type="hidden" id="docId" name="docId">
+            <input type="hidden" id="docCharges" name="docCharges">
 
             <div class="col-md-6">
                 <label for="dateBooked" class="form-label">Choose Appointment date</label>
@@ -111,7 +112,18 @@
                 </div>
             </div>
 
-            <div class="col-6 mt-5">
+            <div class="col-md-2">
+                <label for="isFollowUp" class="form-label">Is it a follow up ?</label>
+                <select class="form-select" id="isFollowUp" name="isFollowUp" required>
+                    <option selected value="0"> No</option>
+                    <option value="1">Yes</option>
+                </select>
+                <div class="valid-feedback">
+                    Looks Good
+                </div>
+            </div>
+
+            <div class="col-6 mt-3">
                 <!-- Button trigger modal -->
                 <button type="button" onclick="populateModalBody()" class="btn btn-outline-warning"
                     data-bs-toggle="modal" data-bs-target="#exampleModal">

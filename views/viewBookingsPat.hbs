@@ -151,8 +151,8 @@ docDet.forEach((e) => {
   form.setAttribute("method", "POST");
 
   const cancelBooking = document.createElement("button");
-  cancelBooking.setAttribute("value", `${e.booking_id}`);
-  cancelBooking.setAttribute("name", "booking_id");
+  cancelBooking.setAttribute("value", `${e.appointment_id}`);
+  cancelBooking.setAttribute("name", "appointment_id");
   cancelBooking.setAttribute("class", "btn btn-dark");
   cancelBooking.setAttribute("type", "submit");
   
