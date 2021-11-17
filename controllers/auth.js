@@ -6,6 +6,8 @@ const session=require('express-session');
 const async = require('hbs/lib/async');
 const wbm = require('wbm');
 const schedule = require('node-schedule');
+const nodemailer = require('nodemailer');
+const cron = require('node-cron');
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -15,6 +17,232 @@ const db = mysql.createConnection({
     password: process.env.Database_password,
     database: process.env.Database
 });
+
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+//scheduler
+let mailOptions ={
+    from:'adherotesting@gmail.com',
+    to:'rudranshj95@gmail.com',
+    subject: 'A reminder from Adhero',
+    text:'It is a healthy reminder to take your medicine'
+};
+
+const transporter = nodemailer.createTransport({
+    service:'gmail',
+    auth:{
+        user:'adherotesting@gmail.com',
+        pass:'adheroadhero'
+    }
+});
+
+cron.schedule('0 9 * * *',()=>{
+    console.log('Cornjob working...')
+    let system_date = formatDate(new Date().toDateString())
+    db.query('select patient_id as patid, prescription_id as presid from prescriptions where prescription_start<=? AND prescription_end>=?',[system_date,system_date],(err,res)=>{
+        if(err)
+        {
+            console.log(err)
+        }else{
+            console.log(res);
+            //console.log(res[0].patid);
+            let length = res.length
+            console.log('length: ',length);
+            for(var i = 0; i < length; i ++){
+                var patient_id = res[i].patid
+                var prescription_id = res[i].presid
+                db.query('SELECT email as mail from  patient where patient_id=?',[patient_id],(err1,res1)=>{
+                    if(err1)
+                    {
+                        console.log(err1)
+                    }else{
+                        var email = res1[0].mail;
+                        console.log(email);
+                        db.query('SELECT medicine as medList from medicines where prescription_id=? and breakfast=?',[prescription_id,1],(err3,res3)=>{
+                            if(err3)
+                            {
+                                console.log(err3)
+                            }else{
+                                //console.log(res3);
+                                let newMedList = []
+                                res3.forEach((elem)=>{
+                                    newMedList.push(elem.medList)
+                                })
+
+                                console.log(res3[0].medList);
+                                mailOptions.to = email
+                                mailOptions.text = `It is an healthy reminder to take your medicine ${newMedList}`
+                                transporter.sendMail(mailOptions,(error,info)=>{
+                                    if(error)
+                                    {
+                                        console.log(error)
+                                    }else{
+                                        console.log('Email sent!')
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+
+            // res.patid.forEach(aFunction)
+            
+            // function aFunction(item)
+            // {
+            //     db.query('SELECT email from patient where patient_id=?',[item],(er,re)=>{
+                    
+            //     })
+            // }
+        }
+    })
+  
+
+})
+
+cron.schedule('0 15 * * *',()=>{
+    console.log('Cornjob working...')
+    let system_date = formatDate(new Date().toDateString())
+    db.query('select patient_id as patid, prescription_id as presid from prescriptions where prescription_start<=? AND prescription_end>=?',[system_date,system_date],(err,res)=>{
+        if(err)
+        {
+            console.log(err)
+        }else{
+            console.log(res);
+            //console.log(res[0].patid);
+            let length = res.length
+            console.log('length: ',length);
+            for(var i = 0; i < length; i ++){
+                var patient_id = res[i].patid
+                var prescription_id = res[i].presid
+                db.query('SELECT email as mail from  patient where patient_id=?',[patient_id],(err1,res1)=>{
+                    if(err1)
+                    {
+                        console.log(err1)
+                    }else{
+                        var email = res1[0].mail;
+                        console.log(email);
+                        db.query('SELECT medicine as medList from medicines where prescription_id=? and lunch=?',[prescription_id,1],(err3,res3)=>{
+                            if(err3)
+                            {
+                                console.log(err3)
+                            }else{
+                                //console.log(res3);
+                                let newMedList = []
+                                res3.forEach((elem)=>{
+                                    newMedList.push(elem.medList)
+                                })
+
+                                console.log(res3[0].medList);
+                                mailOptions.to = email
+                                mailOptions.text = `It is an healthy reminder to take your medicine ${newMedList}`
+                                transporter.sendMail(mailOptions,(error,info)=>{
+                                    if(error)
+                                    {
+                                        console.log(error)
+                                    }else{
+                                        console.log('Email sent!')
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+
+            // res.patid.forEach(aFunction)
+            
+            // function aFunction(item)
+            // {
+            //     db.query('SELECT email from patient where patient_id=?',[item],(er,re)=>{
+                    
+            //     })
+            // }
+        }
+    })
+  
+
+})
+
+cron.schedule('0 21 * * *',()=>{
+    console.log('Cornjob working...')
+    let system_date = formatDate(new Date().toDateString())
+    db.query('select patient_id as patid, prescription_id as presid from prescriptions where prescription_start<=? AND prescription_end>=?',[system_date,system_date],(err,res)=>{
+        if(err)
+        {
+            console.log(err)
+        }else{
+            console.log(res);
+            //console.log(res[0].patid);
+            let length = res.length
+            console.log('length: ',length);
+            for(var i = 0; i < length; i ++){
+                var patient_id = res[i].patid
+                var prescription_id = res[i].presid
+                db.query('SELECT email as mail from  patient where patient_id=?',[patient_id],(err1,res1)=>{
+                    if(err1)
+                    {
+                        console.log(err1)
+                    }else{
+                        var email = res1[0].mail;
+                        console.log(email);
+                        db.query('SELECT medicine as medList from medicines where prescription_id=? and dinner=?',[prescription_id,1],(err3,res3)=>{
+                            if(err3)
+                            {
+                                console.log(err3)
+                            }else{
+                                //console.log(res3);
+                                let newMedList = []
+                                res3.forEach((elem)=>{
+                                    newMedList.push(elem.medList)
+                                })
+
+                                console.log(res3[0].medList);
+                                mailOptions.to = email
+                                mailOptions.text = `It is an healthy reminder to take your medicine ${newMedList}`
+                                transporter.sendMail(mailOptions,(error,info)=>{
+                                    if(error)
+                                    {
+                                        console.log(error)
+                                    }else{
+                                        console.log('Email sent!')
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+
+            // res.patid.forEach(aFunction)
+            
+            // function aFunction(item)
+            // {
+            //     db.query('SELECT email from patient where patient_id=?',[item],(er,re)=>{
+                    
+            //     })
+            // }
+        }
+    })
+  
+
+})
+
+
+//scheduler
 
 var patientIdForAllergy = 0;
 // function addAllergy(item)
@@ -250,11 +478,24 @@ exports.viewBookingsPat = (req,res) => {
     });
 }
 
-exports.addingPrescription = (req,res) =>{
+exports.addingPrescription =  (req,res) =>{
     var presId = 0;
     // console.log("reqbody below");
-    // console.log(req.body);
+     console.log(req.body);
     const {operations,medicines,form_elements} = req.body;
+
+    //retreiving patient emailid
+    var patEmail = 'rj@gmail.com'
+    db.query('SELECT email as em from patient where patient_id=?',[form_elements.patientid], (err,res)=>{
+        if(err)
+        {
+            console.log(err)
+        }else{
+            patEmail = res[0].em;
+            
+        }
+    });
+   
 
     db.query('INSERT into prescriptions set ?',{doctor_id:doctorSess.idss,patient_id:form_elements.patientid,prescription_start:form_elements.sdate,prescription_end:form_elements.edate,symptoms:form_elements.symptoms},(err,result)=>{
         if(err){
@@ -302,36 +543,7 @@ exports.addingPrescription = (req,res) =>{
         }
     });
     //const {operations,medicines,form_elements} = req.body;
-    // var newContact = 0;
-    // var startDate = new Date('2021-11-16T16:15:00.000+5:30');
-    // var endDate = form_elements.edate;
-
-    // schedule.scheduleJob(startDate,()=>{
-    //     db.query('Select contact_no from patient where patient_id=?',[form_elements.patientid],(er,re)=>{
-    //         if(er)
-    //         {
-    //             console.log(er);
-    //         }else{
-    //             newContact = re[0].contact_no;
-    //             console.log(newContact);
-
-    //             medicines.forEach(fxn)
-    //             function fxn(item)
-    //             {
-    //                 if(item.morning==true)
-    //                 {
-    //                     wbm.start().then(async () => {
-    //                         const phones = [newContact];
-    //                         const message = 'It is an healthy reminder for your dose of medicine: {{item.name}}';
-    //                         await wbm.send(phones, message);
-    //                         await wbm.end();
-    //                     }).catch(err => console.log(err));
-    //                 }
-    //             }
-    //         }
-    //     })
-        
-    // })
+    
   
 }
 
@@ -829,7 +1041,7 @@ exports.adhereResponse = (req,res) => {
     })
 
     var dose = 0;
-    db.query('Select prescription_id from prescriptions where patient_id=?',[patientSess.ids],(err9,res9)=>{
+    db.query('Select prescription_id from prescriptions where patient_id=?',[patientSess.ids], (err9,res9)=>{
         if(err9)
         {
             console.log(err9)

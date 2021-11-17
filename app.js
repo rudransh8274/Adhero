@@ -7,6 +7,8 @@ const session=require('express-session');
 const wbm = require('wbm');
 var bodyParser= require('body-parser');
 const schedule = require('node-schedule');
+const nodemailer = require('nodemailer');
+const cron = require('node-cron');
 
 var urlencodedParser=bodyParser.urlencoded({extended:false});
 
