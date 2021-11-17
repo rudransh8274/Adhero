@@ -15,7 +15,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-    <title>Adhero Add Patient's Prescription</title>
+    <title>Adhero View Prescription</title>
     <!-- CSS -->
     <link rel="stylesheet" href="/css/index.css">
 </head>
@@ -62,7 +62,7 @@
 
     <!-- Page Title -->
     <header class="page-header mx-auto col-md-7 my-4">
-        <h1 class="page-title fw-bold">Prescription for Patient Mr./Mrs. XYZ with Dr. XYZ </h1>
+        <h1 class="page-title fw-bold">Prescription for Patient Mr./Mrs. <p id="patient" style="display: inline;"></p> with Dr. <p id="doctor" style="display: inline;"></p> </h1>
     </header>
 
 
@@ -72,13 +72,12 @@
 
        <h3 class="my-3"><b class="text-info">Patient's Name: &nbsp;</b> Mr. Rudransh Joshi</h3>
      
-       <h3 class="my-3"><b class="text-info">Age: &nbsp;</b> 20 yrs</h3>
+       <h3 class="my-3"><b class="text-info">Age: &nbsp;</b> <p id="age" style="display: inline;">20 yrs</p></h3>
 
-       <h3 class="my-3"><b class="text-info">Starting Date of Dosage: &nbsp;</b> 15th September 2021</h3>
+       <h3 class="my-3"><b class="text-info">Starting Date of Dosage: &nbsp;</b> <p id="sdate" style="display: inline;" >15th September 2021</p></h3>
 
-       <h3 class="my-3"><b class="text-info">Ending Date of Dosage: &nbsp;</b> 20th September 2021</h3>
+       <h3 class="my-3"><b class="text-info">Ending Date of Dosage: &nbsp;</b> <p id="edate" style="display: inline;" >20th September 2021</p></h3>
 
-       <h3 class="my-3"><b class="text-info">Is this Course Ongoing? : &nbsp;</b> <p style="color: lightgreen; display: inline; font-weight: bold;">Yes</p>/  <p style="color: red; display: inline; font-weight: bold;">No</p></h3>
        
        <h2 class="fw-bold mb-3">Dosage List: </h2>
 
@@ -87,13 +86,13 @@
         <thead>
           <tr>
             <th scope="col">Name of Dosage</th>
-            <th scope="col">Morning</th>
-            <th scope="col">Afternoon</th>
+            <th scope="col">breakfast</th>
+            <th scope="col">Lunch</th>
             <th scope="col">Dinner</th>
           </tr>
         </thead>
         <tbody>
-
+{{!-- 
             <tr>
                 <th>Paracetamol</th>
                 <th> &#9989; </th>
@@ -117,7 +116,7 @@
                 <th> &#9989; </th>
                 <th> &#10060;</th>
                 <th>&#9989;</th>
-              </tr>
+              </tr> --}}
         
         </tbody>
       </table>
@@ -125,7 +124,48 @@
     </div><br><br>
 
     <!-- Custom JS -->
-    <script src="../javascript/addprescription.js"></script>
+    <script >
+        let finalData = {{{finalData}}}
+        var patient = document.getElementById('patient')
+        patient.innerHTML = finalData.name
+        var doctor = document.getElementById('doctor')
+        doctor.innerHTML = finalData.docName
+        var sdate = document.getElementById('sdate')
+        sdate.innerHTML = new Date(Date.parse(finalData.startDate)).toDateString()
+        var edate = document.getElementById('edate')
+        edate.innerHTML = new Date(Date.parse(finalData.endDate)).toDateString()
+        var age = document.getElementById('age')
+        age.innerHTML = finalData.age
+        var table = document.getElementById('medicinetable')
+        var medicinelist = finalData.medObj
+        for(var i = 0; i < medicinelist.length ; i ++){
+        var row = table.insertRow();
+        var cell1 = row.insertCell();
+        var cell2 = row.insertCell();
+        var cell3 = row.insertCell();
+        var cell4 = row.insertCell();
+        cell1.innerHTML = `${medicinelist[i].medicine}`
+        if(medicinelist[i].breakfast === 1){
+            cell2.innerHTML = '&#9989;'
+        }else{
+             cell2.innerHTML = '&#10060;'
+        }
+          if(medicinelist[i].lunch === 1){
+        cell3.innerHTML = '&#9989;'
+        }else{
+             cell3.innerHTML = '&#10060;'
+        }
+          if(medicinelist[i].dinner === 1){
+            cell4.innerHTML = '&#9989;'
+        }else{
+             cell4.innerHTML = '&#10060;'
+        }
+    
+        }
+
+        console.log(finalData)
+
+    </script>
     <!-- Bootstrap 5 : JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

@@ -62,7 +62,7 @@
 
     <!-- Page Title -->
     <header class="page-header mx-auto col-md-7 my-4">
-        <h1 class="page-title fw-bold">Adherence Report for Patient XYZ </h1>
+        <h1 class="page-title fw-bold">Adherence Report </h1>
     </header>
 
 
@@ -70,9 +70,9 @@
 
         <!--Form starting-->
 
-       <h3 class="my-3"><b class="text-info">Patient's Name: &nbsp;</b> Mr. Rudransh Joshi</h3>
+       <h3 class="my-3"><b class="text-info">Patient's Name: &nbsp;</b> <p id="name" style="display: inline;">Mr. Rudransh Joshi</p></h3>
      
-       <h3 class="my-3"><b class="text-info">Age: &nbsp;</b> 20 yrs</h3>
+       <h3 class="my-3"><b class="text-info">Age: &nbsp;</b> <p id="age" style="display: inline;">20 yrs</p></h3>
 
        <h3 class="my-3"><b class="text-info">Adherence Level &nbsp;</b> <p style="display: inline;" id="adherence"></p></h3>
 
@@ -130,11 +130,15 @@
     <!-- Custom JS -->
     <script >
         var finalRes = {{{finalResponse}}};
-        var finalRes2 = JSON.parse(finalRes);
-        //console.log(finalRes);
-        let adherence_level = finalRes2.group;
-        console.log(adherence_level);
-
+        let adherence_level = finalRes.group;
+        let name = finalRes.name 
+        let age = finalRes.age 
+        var check = document.getElementById("name")
+        var check1 = document.getElementById("age")
+        check.innerHTML = name
+        check1.innerHTML = age
+        
+        
 
 if (adherence_level === 1){
     var elem = document.getElementById("adherence")
@@ -161,7 +165,7 @@ if (adherence_level === 1){
     list.appendChild(li);
 
 
-}else if(adherence_level === 0){
+}else if(adherence_level === 3){
     var elem = document.getElementById("adherence")
     elem.style.color = "#E32636"
     elem.innerHTML = 'Low (Upto 50% Only)'
@@ -213,7 +217,7 @@ if (adherence_level === 1){
     li.appendChild(document.createTextNode("Your geographical location is most likely to be suitable"));
     list.appendChild(li);
  
-}else if(adherence_level === 3){
+}else if(adherence_level === 0){
    
     var elem = document.getElementById("adherence")
     elem.style.color = "green"

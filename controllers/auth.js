@@ -1004,22 +1004,25 @@ exports.adhereResponse = (req,res) => {
             response.forEach(myfunction);
             function myfunction(items)
             {
+                console.log(items.prescription_start);
+                console.log(items.prescription_end);
                 db.query('SELECT datediff(?,?) as dif',[items.prescription_start,items.prescription_end],(er,re)=>{
                     if(er)
                     {
                         console.log(er)
                     }else{
+                        console.log('date diffference',re[0].dif)
                         courseDura += re[0].dif;
                     }
                 })
             }
         }
     })
-    db.query('Select datediff(,)')
+    //db.query('Select datediff(,)')
 
     var encDura = 0;
     var countApp = 0;
-    db.query('SELECT COUNT(patient_id) as cout in appointment where patient_id=?',[patientSess.ids],(error,response)=>{
+    db.query('SELECT COUNT(patient_id) as cout from appointment where patient_id=?',[patientSess.ids],(error,response)=>{
         if(error)
         {
             console.log(error)
@@ -1086,7 +1089,31 @@ exports.adhereResponse = (req,res) => {
 };
 request(options, function (error, response) {
   if (error) throw new Error(error);
-  console.log(response.body);
+  let finalObj = {};
+//   console.log(response.body);
+    var x = JSON.parse(response.body)
+  finalObj.group = x.group;
+  db.query('SELECT first_name as name from patient where patient_id=?',[patientId],(errfi,resfi)=>{
+      if(errfi)
+      {
+          console.log(errfi);
+      }else{
+        finalObj.name = resfi[0].name;
+        db.query('SELECT age as ag from patient where patient_id=?',[patientId],(errfi2,resfi2)=>{
+            if(errfi2)
+            {
+                console.log(errfi2)
+            }else{
+                finalObj.age = resfi2[0].ag;
+                console.log(finalObj);
+                //const finalResponse = response.body;
+                return res.render('adhereResponse',{finalResponse : JSON.stringify(finalObj)})
+            }
+        })
+      }
+  })
+  
+ 
   
 });
 
@@ -1150,5 +1177,50 @@ exports.viewFullPrescription = (req,res)=>{
     const {prescription_id} = req.body;
     //console.log(typeof prescription_id);
     //console.log(prescription_id);
-     res.render('viewPrescription');
+    //datea needed - all medicines
+    let finalObj = {};
+    db.query('SELECT first_name as fname,age as ag  from patient where patient_id=?',[patientSess.ids],(err6,res6)=>{
+        if(err6)
+        {
+            console.log(err6)
+        }else{
+            finalObj.name = res6[0].fname;
+            finalObj.age = res6[0].ag;
+            db.query('SELECT prescription_start as presStart,prescription_end as presEnd,doctor_id as did from prescriptions where prescription_id=?',[req.body.booking_id],(err2,res2)=>{
+                if(err2)
+                {
+                    console.log(err2)
+                }else{
+                    finalObj.startDate = res2[0].presStart;
+                    finalObj.endDate = res2[0].presEnd;
+                
+                db.query('SELECT first_name as name from doctor where doctor_id=?',[res2[0].did],(err5,res5)=>{
+                    if(err5)
+                    {
+                        console.log(err5)
+                    }else{
+                        finalObj.docName = res5[0].name;
+                    }
+                })
+
+                // db.query('SELECT doctor_id from doctor where ')
+
+                db.query('SELECT * from  medicines where prescription_id=?',[req.body.booking_id],(err3,res3)=>{
+                        if(err3)
+                        {
+                            console.log(err3)
+                        }else{
+                            finalObj.medObj = res3;
+                            console.log(finalObj);
+                           return res.render('viewPrescription',{finalData : JSON.stringify(finalObj)});
+                        }
+                    })
+                }
+            })
+
+            
+        }
+    })
+
+     
 }
